@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class MenuController extends AbstractController
 {
@@ -23,10 +24,8 @@ class MenuController extends AbstractController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return Response
-     * @Route("/menu/add",name="menu-class")
+      /**
+     * @Route("/menu/Add", name="add-menu")
      */
 
     function AddMenu(Request $request)
@@ -36,10 +35,23 @@ class MenuController extends AbstractController
         $form->add('add', SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $menu->getImg();
+            $fileName = md5(uniqid()) . "." . $file->guessExtension();
+            if ($file) {
+                try {
+                    $file->move(
+                        $this->getParameter('images_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    $e->getMessage();
+                }
+            }
+            $menu->setImg($fileName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($menu);
             $em->flush();
-            return $this->redirectToRoute('Affiche');
+            return $this->redirectToRoute('menu-class');
         }
         return $this->render('menu/AddMenu.html.twig', ['form' => $form->CreateView()]);
     }
@@ -50,23 +62,23 @@ class MenuController extends AbstractController
     public function Affiche(MenuRepository $repository)
     {
         $menu = $repository->findAll();
-        return $this->render('event/AfficheEvents.html.twig', ['menu' => $menu]);
+        return $this->render('menu/AfficheMenu.html.twig', ['menu' => $menu]);
     }
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @Route ("menu/modifier/{id}", name="modifier")
+     * @Route ("gerant/updateMenu/{id}", name="updateM")
      */
-
-    function modifier($id, MenuRepository $repository, Request $request)
+    function update($id, MenuRepository $repository, Request $request)
     {
         $menu = $repository->find($id);
         $form = $this->createForm(MenuType::class, $menu);
-        $form->add('modifier', SubmitType::class);
+        $form->add('update', SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $em->persist($menu);
             $em->flush();
-            return $this->redirectToRoute("affiche");
+            return $this->redirectToRoute("menu-class");
         }
         return $this->render('menu/modifier.html.twig', [
             'update_form' => $form->createView()
@@ -74,13 +86,13 @@ class MenuController extends AbstractController
     }
 
     /**
-     * @Route("/menu/Delete/{id}", name="deleteM")
+     * @Route("/event/Delete/{id}", name="deleteM")
      */ function Delete($id, MenuRepository $rep)
     {
-        $event = $rep->find($id);
+        $menu = $rep->find($id);
         $em = $this->getDoctrine()->getManager();
-        $em->remove($event);
+        $em->remove($menu);
         $em->flush();
-        return $this->redirectToRoute("affiche");
+        return $this->redirectToRoute("menu-class");
     }
 }

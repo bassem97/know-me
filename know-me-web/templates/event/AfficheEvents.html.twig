@@ -17,23 +17,7 @@
 				<th>Delete</th>
 				<th>Update</th>
 			</tr>
-			{% for t in event %}
-				<tr>
-					<td>{{ t.name }}</td>
-					<td>{{ t.description }}</td>
-					<td><img src="{{ asset('img/') ~ t.image }}" alt="" style="width: 50px !important;height: 50px !important"></td>
-
-					<td>
-						<a href="{{ path('delete-event',{'id':t.id}) }}">Delete</a>
-					</td>
-					<td>
-						<a href="{{ path('update',{'id':t.id}) }}">Update</a>
-					</td>
-					<td>
-						<a href="{{ path('participate',{'id':t.id}) }}">Participer</a>
-					</td>
-				</tr>
-			{% endfor %}
+		
 		</table>
 	</body>
 </html>
