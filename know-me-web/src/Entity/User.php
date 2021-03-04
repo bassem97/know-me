@@ -47,10 +47,25 @@ class User
      * @ORM\OneToOne(targetEntity="Photo", cascade={"persist", "remove"})
      */
     private $photo;
+      /**
+     *ORM\ManyToMany(targetEntity="User", mappedBy="myDiscussions")
+     */
+
+
+    private $Discussion;
+        /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="Discussion")
+     * @ORM\JoinTable(name="Discussions",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="Discussion_user_id", referencedColumnName="id")}
+     *      )
+     */
+    private $myDiscussions;
 
     /**
-     *ORM\ManyToMany(targetEntity="User", mappedBy="myMatchs")
+     *ORM\ManyToMany(targetEntity="User", mappedBy="myDiscussions")
      */
+
 
     private $MatchsWithMe;
         /**
@@ -65,6 +80,8 @@ class User
     public function __construct() {
         $this->MatchsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myMatchs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->Discussion = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->myDiscussions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId(): ?int
