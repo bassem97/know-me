@@ -44,7 +44,7 @@ class User
     private $location;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToOne(targetEntity="Photo", cascade={"persist", "remove"})
      */
     private $photo;
 
