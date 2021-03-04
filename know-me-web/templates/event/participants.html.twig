@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Liste des events</h1>
+		<table border="1">
+			<tr>
+
+				<th>nom</th>
+				<th>Description</th>
+				<th>Date</th>
+
+			</tr>
+			{% for u in user.event %}
+				{% for t in u.users %}
+					<tr>
+						<td>{{ u.id }}</td>
+						<td>{{ t.id }}</td>
+						<td>ok</td>
+
+					</tr>
+				{% endfor %}
+			{% endfor %}
+		</table>
+	</body>
+</html>
