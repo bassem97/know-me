@@ -26,10 +26,10 @@ class MenuController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return Response
-     * @Route("menu/add",name="menu-class")
+     * @Route("/menu/add",name="menu-class")
      */
 
-    Function AddMenu(Request $request)
+    function AddMenu(Request $request)
     {
         $menu = new menu();
         $form = $this->CreateForm(MenuType::class, $menu);
@@ -43,45 +43,44 @@ class MenuController extends AbstractController
         }
         return $this->render('menu/AddMenu.html.twig', ['form' => $form->CreateView()]);
     }
-    /*
+    /**
      * @param MenuRepository $repository
-     * @Route("Menu\Affiche",name="Affiche)
+     * @Route ("/AfficherMenu", name="menu-class")
      */
-    public function Affiche(MenuRepository $repository){
-    $Menu=$repository->findAll();
-    return $this->render('Menu/Affiche.html.twig',['$Menu'=>$Menu]);}
-}
-/**
+    public function Affiche(MenuRepository $repository)
+    {
+        $menu = $repository->findAll();
+        return $this->render('event/AfficheEvents.html.twig', ['menu' => $menu]);
+    }
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @Route ("menu/modifier/{id}", name="modifier")
      */
 
-    function modifier($id, MenuRepository $repository,Request $request){
-        $menu=$repository->find($id);
-        $form=$this->createForm(MenuType::class, $menu);
+    function modifier($id, MenuRepository $repository, Request $request)
+    {
+        $menu = $repository->find($id);
+        $form = $this->createForm(MenuType::class, $menu);
         $form->add('modifier', SubmitType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
-            $em=$this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute("affiche");
         }
         return $this->render('menu/modifier.html.twig', [
-            'update_form'=>$form->createView()
+            'update_form' => $form->createView()
         ]);
     }
-    
+
     /**
      * @Route("/menu/Delete/{id}", name="deleteM")
      */ function Delete($id, MenuRepository $rep)
-     {
+    {
         $event = $rep->find($id);
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $em->remove($event);
         $em->flush();
         return $this->redirectToRoute("affiche");
-
     }
-
-
-
+}

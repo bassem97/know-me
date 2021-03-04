@@ -51,7 +51,6 @@ class User
     private $photo;
 
     /**
-<<<<<<< HEAD
      * Many Users have Many Users.
      * @ORM\ManyToMany(targetEntity="User", mappedBy="myMatchs")
      */
@@ -82,15 +81,6 @@ class User
     public function __construct() {
         $this->MatchsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myMatchs = new \Doctrine\Common\Collections\ArrayCollection();
-=======
-     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="users")
-     */
-    private $Event;
-
-    public function __construct()
-    {
-        $this->Event = new ArrayCollection();
->>>>>>> b3ffb050dd856986f4b16f2d17e09a1ca3f38107
     }
 
     public function getId(): ?int
@@ -170,38 +160,6 @@ class User
         return $this;
     }
 
-<<<<<<< HEAD
-    public function getReservation(): ?Reservation
-    {
-        return $this->reservation;
-    }
-
-    public function setReservation(Reservation $reservation): self
-    {
-        // set the owning side of the relation if necessary
-        if ($reservation->getIduser() !== $this) {
-            $reservation->setIduser($this);
-        }
-
-        $this->reservation = $reservation;
-
-        return $this;
-    }
-
-    public function getJoinedAt(): ?Room
-    {
-        return $this->joined_At;
-    }
-
-    public function setJoinedAt(?Room $joined_At): self
-    {
-        $this->joined_At = $joined_At;
-
-        return $this;
-    }
-
-   
-=======
     /**
      * @return Collection|Event[]
      */
@@ -225,5 +183,4 @@ class User
 
         return $this;
     }
->>>>>>> b3ffb050dd856986f4b16f2d17e09a1ca3f38107
 }
