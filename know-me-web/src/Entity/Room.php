@@ -35,7 +35,7 @@ class Room
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=user::class, mappedBy="joined_At")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="joined_At")
      */
     private $user;
 

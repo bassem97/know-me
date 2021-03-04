@@ -2,28 +2,26 @@
 
 namespace App\Form;
 
-use App\Entity\Photo;
+use App\Entity\Room;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ImageType extends AbstractType
+class RoomType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('bio')
-        ->add('user')
-        ->add('image', FileType::class, ['label'=>'Ajouter une image'])
-        
-        ;
+            ->add('name')
+            ->add('menu_id')
+            ->add('description')
+            ->add('user');
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Photo::class,
+            'data_class' => Room::class,
         ]);
     }
 }
