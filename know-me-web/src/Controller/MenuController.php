@@ -26,7 +26,7 @@ class MenuController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return Response
-     * @Route("menu/add")
+     * @Route("menu/add",name="menu-class")
      */
 
     Function AddMenu(Request $request)

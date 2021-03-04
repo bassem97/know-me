@@ -44,9 +44,42 @@ class User
     private $location;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity=Photo::class, cascade={"persist", "remove"}, mappedBy="user", orphanRemoval = true)
      */
     private $photo;
+
+    /**
+     * Many Users have Many Users.
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="myMatchs")
+     */
+
+    private $MatchsWithMe;
+        /**
+     * Many Users have many Users.
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="MatchsWithMe")
+     * @ORM\JoinTable(name="matchs",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="match_user_id", referencedColumnName="id")}
+     *      )
+     */
+    private $myMatchs;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Reservation::class, mappedBy="iduser", cascade={"persist", "remove"})
+     */
+    private $reservation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="user")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $joined_At;
+
+    
+    public function __construct() {
+        $this->MatchsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->myMatchs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -113,15 +146,46 @@ class User
         return $this;
     }
 
-    public function getPhoto(): ?string
+    public function getPhoto()
     {
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): self
+    public function setPhoto($photo)
     {
         $this->photo = $photo;
 
         return $this;
     }
+
+    public function getReservation(): ?Reservation
+    {
+        return $this->reservation;
+    }
+
+    public function setReservation(Reservation $reservation): self
+    {
+        // set the owning side of the relation if necessary
+        if ($reservation->getIduser() !== $this) {
+            $reservation->setIduser($this);
+        }
+
+        $this->reservation = $reservation;
+
+        return $this;
+    }
+
+    public function getJoinedAt(): ?Room
+    {
+        return $this->joined_At;
+    }
+
+    public function setJoinedAt(?Room $joined_At): self
+    {
+        $this->joined_At = $joined_At;
+
+        return $this;
+    }
+
+   
 }
