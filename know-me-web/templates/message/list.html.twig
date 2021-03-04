@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hello MessageController!{% endblock %}
+
+{% block body %}
+<h1>Lise des message</h1>
+<p><a href="{{ path('sendMessage') }}">envoyer un message</a></p>
+{% for message in messages %}
+    <table>
+        <thead>
+            <th>Content</th>
+            <th>Date</th>
+        </thead>
+        <tbody>
+            <td>{{ message.Content }}</td>
+            <td>{{ message.date|date("d/m/Y")}}</td>
+            
+        </tbody>
+    </table>
+{% endfor %}
+{% endblock %}
