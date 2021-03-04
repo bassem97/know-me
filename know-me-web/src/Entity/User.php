@@ -62,6 +62,12 @@ class User
      */
     private $myMatchs;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Reservation::class, mappedBy="iduser", cascade={"persist", "remove"})
+     */
+    private $reservation;
+
+    
     public function __construct() {
         $this->MatchsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myMatchs = new \Doctrine\Common\Collections\ArrayCollection();
@@ -143,4 +149,23 @@ class User
 
         return $this;
     }
+
+    public function getReservation(): ?Reservation
+    {
+        return $this->reservation;
+    }
+
+    public function setReservation(Reservation $reservation): self
+    {
+        // set the owning side of the relation if necessary
+        if ($reservation->getIduser() !== $this) {
+            $reservation->setIduser($this);
+        }
+
+        $this->reservation = $reservation;
+
+        return $this;
+    }
+
+   
 }
