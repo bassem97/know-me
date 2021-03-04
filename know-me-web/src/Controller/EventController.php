@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class EventController extends AbstractController
 {
@@ -37,11 +38,24 @@ class EventController extends AbstractController
      */
     function AddEvent(Request $request)
     {
+        
         $event = new event();
         $form = $this->createForm(EventType::class, $event);
         $form->add('Ajouter', SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file=$event->getImage();
+            $fileName=md5(uniqid()).".".$file->guessExtension();
+
+            try {
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+                $e->getMessage();
+            }
+            $event->setImage($fileName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush();
