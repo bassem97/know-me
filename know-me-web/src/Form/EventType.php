@@ -16,7 +16,7 @@ class EventType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('date')
-            ->add('image',FileType::class)
+            ->add('image',FileType::class, array('data_class' => null))
            
         ;
     }

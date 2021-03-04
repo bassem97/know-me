@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\UserType;
-use App\Entity\User;
+use App\Entity\user;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,7 +41,7 @@ class UserController extends AbstractController
      */
 
     function addUser(Request $request){
-        $user = new User();
+        $user = new user();
         $form = $this->createForm(UserType::class, $user);
         $form->add('Ajouter', submitType::class);
         $form->handleRequest($request);

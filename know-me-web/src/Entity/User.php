@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,6 +51,7 @@ class User
     private $photo;
 
     /**
+<<<<<<< HEAD
      * Many Users have Many Users.
      * @ORM\ManyToMany(targetEntity="User", mappedBy="myMatchs")
      */
@@ -79,6 +82,15 @@ class User
     public function __construct() {
         $this->MatchsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myMatchs = new \Doctrine\Common\Collections\ArrayCollection();
+=======
+     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="users")
+     */
+    private $Event;
+
+    public function __construct()
+    {
+        $this->Event = new ArrayCollection();
+>>>>>>> b3ffb050dd856986f4b16f2d17e09a1ca3f38107
     }
 
     public function getId(): ?int
@@ -158,6 +170,7 @@ class User
         return $this;
     }
 
+<<<<<<< HEAD
     public function getReservation(): ?Reservation
     {
         return $this->reservation;
@@ -188,4 +201,29 @@ class User
     }
 
    
+=======
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvent(): Collection
+    {
+        return $this->Event;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->Event->contains($event)) {
+            $this->Event[] = $event;
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        $this->Event->removeElement($event);
+
+        return $this;
+    }
+>>>>>>> b3ffb050dd856986f4b16f2d17e09a1ca3f38107
 }

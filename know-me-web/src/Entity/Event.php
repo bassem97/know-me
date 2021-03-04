@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,17 @@ class Event
      * @ORM\Column(type="string", length=255)
      */
     private $image;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="Event")
+     * 
+     */
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +116,33 @@ class Event
     public function setImage($image)
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeEvent($this);
+        }
 
         return $this;
     }
