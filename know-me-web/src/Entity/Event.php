@@ -37,6 +37,11 @@ class Event
      */
     private $gerant;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class Event
     public function setGerant(?Gerant $gerant): self
     {
         $this->gerant = $gerant;
+
+        return $this;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
 
         return $this;
     }

@@ -42,6 +42,9 @@ class EventController extends AbstractController
         $form->add('Ajouter', SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file=$event->getImage();
+            $fileName=md5(uniqid()).".".$file->guessExtension();
+            $event->setImage($fileName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush();
