@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GerantRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,16 @@ class Gerant
      * @ORM\Column(type="string", length=255)
      */
     private $photo;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="gerant")
+     */
+    private $Event;
+
+    public function __construct()
+    {
+        $this->Event = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +132,36 @@ class Gerant
     public function setPhoto(string $photo): self
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvent(): Collection
+    {
+        return $this->Event;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->Event->contains($event)) {
+            $this->Event[] = $event;
+            $event->setGerant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->Event->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getGerant() === $this) {
+                $event->setGerant(null);
+            }
+        }
 
         return $this;
     }

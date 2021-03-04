@@ -32,6 +32,11 @@ class Event
      */
     private $date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Gerant::class, inversedBy="Event")
+     */
+    private $gerant;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Event
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getGerant(): ?Gerant
+    {
+        return $this->gerant;
+    }
+
+    public function setGerant(?Gerant $gerant): self
+    {
+        $this->gerant = $gerant;
 
         return $this;
     }
