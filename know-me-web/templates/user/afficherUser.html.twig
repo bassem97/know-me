@@ -27,7 +27,8 @@
             <td>{{ u.email }}</td>
             <td>{{ u.pwd }}</td>
             <td>{{ u.location }}</td>
-            <td>{{ u.photo }}</td>
+            <td><img src="{{ asset('images/') ~ u.photo }}"
+                     alt="" style= "width: 50px !important;height: 50px !important" ></td>
             <td><a href="{{ path('d',{'id':u.id}) }}">Delete</a></td>
             <td><a href="{{ path('update',{'id':u.id}) }}">Update</a></td>
         </tr>

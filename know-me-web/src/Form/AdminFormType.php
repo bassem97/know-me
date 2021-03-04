@@ -2,29 +2,27 @@
 
 namespace App\Form;
 
-use App\Entity\User;
+use App\Entity\Admin;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class AdminFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('email')
-            ->add('f_name')
-            ->add('l_name')
+            ->add('fname')
+            ->add('lname')
             ->add('pwd')
-            ->add('location')
-            ->add('photo', ImageType::class, ['label'=>false])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Admin::class,
         ]);
     }
 }

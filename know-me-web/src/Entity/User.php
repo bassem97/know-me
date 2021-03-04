@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -44,14 +46,33 @@ class User
     private $location;
 
     /**
-     * @ORM\OneToOne(targetEntity="Photo", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Photo::class, cascade={"persist", "remove"}, mappedBy="user", orphanRemoval = true)
      */
     private $photo;
+      /**
+     *ORM\ManyToMany(targetEntity="User", mappedBy="myDiscussions")
+     */
+
+
+    private $Discussion;
+        /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="Discussion")
+     * @ORM\JoinTable(name="Discussions",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="Discussion_user_id", referencedColumnName="id")}
+     *      )
+     */
+    private $myDiscussions;
 
     /**
+<<<<<<< HEAD
      * Many Users have Many Users.
      * @ORM\ManyToMany(targetEntity="User", mappedBy="myMatchs")
+=======
+     *ORM\ManyToMany(targetEntity="User", mappedBy="myDiscussions")
+>>>>>>> c32e087e0589cb19cd99953a7842a3272853276f
      */
+
 
     private $MatchsWithMe;
         /**
@@ -65,6 +86,7 @@ class User
     private $myMatchs;
 
     /**
+<<<<<<< HEAD
      * @ORM\OneToOne(targetEntity=Reservation::class, mappedBy="iduser", cascade={"persist", "remove"})
      */
     private $reservation;
@@ -76,9 +98,18 @@ class User
     private $joined_At;
 
     
+=======
+     * @ORM\OneToMany(targetEntity=Reclamation::class, mappedBy="sentBy")
+     */
+    private $reclamations;
+
+>>>>>>> c32e087e0589cb19cd99953a7842a3272853276f
     public function __construct() {
         $this->MatchsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myMatchs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->Discussion = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->myDiscussions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reclamations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,18 +177,19 @@ class User
         return $this;
     }
 
-    public function getPhoto(): ?string
+    public function getPhoto()
     {
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): self
+    public function setPhoto($photo)
     {
         $this->photo = $photo;
 
         return $this;
     }
 
+<<<<<<< HEAD
     public function getReservation(): ?Reservation
     {
         return $this->reservation;
@@ -188,4 +220,35 @@ class User
     }
 
    
+=======
+    /**
+     * @return Collection|Reclamation[]
+     */
+    public function getReclamations(): Collection
+    {
+        return $this->reclamations;
+    }
+
+    public function addReclamation(Reclamation $reclamation): self
+    {
+        if (!$this->reclamations->contains($reclamation)) {
+            $this->reclamations[] = $reclamation;
+            $reclamation->setSentBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReclamation(Reclamation $reclamation): self
+    {
+        if ($this->reclamations->removeElement($reclamation)) {
+            // set the owning side to null (unless already changed)
+            if ($reclamation->getSentBy() === $this) {
+                $reclamation->setSentBy(null);
+            }
+        }
+
+        return $this;
+    }
+>>>>>>> c32e087e0589cb19cd99953a7842a3272853276f
 }

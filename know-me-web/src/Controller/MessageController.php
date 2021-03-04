@@ -43,6 +43,41 @@ class MessageController extends AbstractController
             "form_message" => $form->createView(),
         ]);
     }
+
+    /**
+ * @Route("/modifyMessage/{id}", name="modifyMessage")
+ */
+
+public function modifyMessage(Request $request, int $id): Response
+{
+    $entityManager = $this->getDoctrine()->getManager();
+
+    $message = $entityManager->getRepository(Message::class)->find($id);
+    $form = $this->createForm(MessageFormType::class, $message);
+    $form->handleRequest($request);
+
+    if($form->isSubmitted() && $form->isValid())
+    {
+        $entityManager->flush();
+    }
+
+    return $this->render("message/index.html.twig", [
+        "form_title" => "Modifier un Message",
+        "form_message" => $form->createView(),
+    ]);
+}
+     /**
+ * @Route("/deleteMessage/{id}", name="deleteMessage")
+ */
+public function deleteMessage(int $id): Response
+{
+    $entityManager = $this->getDoctrine()->getManager();
+    $message = $entityManager->getRepository(Message::class)->find($id);
+    $entityManager->remove($message);
+    $entityManager->flush();
+
+    return $this->redirectToRoute("messages");
+}
     /**
  * @Route("/messages", name="messages")
  */
