@@ -65,12 +65,7 @@ class User
     private $myDiscussions;
 
     /**
-<<<<<<< HEAD
-     * Many Users have Many Users.
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="myMatchs")
-=======
      *ORM\ManyToMany(targetEntity="User", mappedBy="myDiscussions")
->>>>>>> c32e087e0589cb19cd99953a7842a3272853276f
      */
 
 
@@ -86,24 +81,10 @@ class User
     private $myMatchs;
 
     /**
-<<<<<<< HEAD
-     * @ORM\OneToOne(targetEntity=Reservation::class, mappedBy="iduser", cascade={"persist", "remove"})
-     */
-    private $reservation;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="user")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $joined_At;
-
-    
-=======
      * @ORM\OneToMany(targetEntity=Reclamation::class, mappedBy="sentBy")
      */
     private $reclamations;
 
->>>>>>> c32e087e0589cb19cd99953a7842a3272853276f
     public function __construct() {
         $this->MatchsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myMatchs = new \Doctrine\Common\Collections\ArrayCollection();
@@ -189,38 +170,6 @@ class User
         return $this;
     }
 
-<<<<<<< HEAD
-    public function getReservation(): ?Reservation
-    {
-        return $this->reservation;
-    }
-
-    public function setReservation(Reservation $reservation): self
-    {
-        // set the owning side of the relation if necessary
-        if ($reservation->getIduser() !== $this) {
-            $reservation->setIduser($this);
-        }
-
-        $this->reservation = $reservation;
-
-        return $this;
-    }
-
-    public function getJoinedAt(): ?Room
-    {
-        return $this->joined_At;
-    }
-
-    public function setJoinedAt(?Room $joined_At): self
-    {
-        $this->joined_At = $joined_At;
-
-        return $this;
-    }
-
-   
-=======
     /**
      * @return Collection|Reclamation[]
      */
@@ -250,5 +199,4 @@ class User
 
         return $this;
     }
->>>>>>> c32e087e0589cb19cd99953a7842a3272853276f
 }

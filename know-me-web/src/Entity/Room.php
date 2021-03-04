@@ -25,7 +25,7 @@ class Room
     private $name;
 
     /**
-     * @ORM\OneToOne(targetEntity=menu::class, inversedBy="room", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Menu::class, inversedBy="room", cascade={"persist", "remove"})
      */
     private $menu_id;
 
