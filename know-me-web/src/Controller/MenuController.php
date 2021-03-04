@@ -3,11 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Menu;
+use App\Form\MenuType;
 use App\Repository\MenuRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\BrowserKit\Request;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MenuController extends AbstractController
@@ -23,28 +24,30 @@ class MenuController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Route("Menu\Add")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return Response
+     * @Route("menu/add")
      */
+
     Function AddMenu(Request $request)
     {
         $Menu = new Menu();
-        $form = $this->CreateForm();
+        $form = $this->CreateForm(MenuType::class, $Menu);
         $form->add('add', SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($Menu);
             $em->flush();
-            return $this->redirecttoRoute('AfficheMenu');
+            return $this->redirectToRoute('Affiche');
         }
-        return $this->render('Menu/AddMenu.html.twig', ['form' => $form->CreateView()]);
+        return $this->render('menu/AddMenu.html.twig', ['form' => $form->CreateView()]);
     }
     /*
-     * @Route("Menu\Affiche",name="AfficheM)
+     * @param MenuRepository $repository
+     * @Route("Menu\Affiche",name="Affiche)
      */
-    public function AfficheM(MenuRepository $repository){
+    public function Affiche(MenuRepository $repository){
     $Menu=$repository->findAll();
     return $this->render('Menu/Affiche.html.twig',['$Menu'=>$Menu]);}
 }
