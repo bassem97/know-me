@@ -28,8 +28,8 @@
             <td>{{ u.pwd }}</td>
             <td>{{ u.location }}</td>
             <td>{{ u.photo }}</td>
-            <!--<td><a href="{{ path('d',{'id':t.id}) }}">Delete</a></td>
-            <td><a href="{{ path('update',{'id':t.id}) }}">Update</a></td>-->
+            <td><a href="{{ path('d',{'id':u.id}) }}">Delete</a></td>
+            <td><a href="{{ path('update',{'id':u.id}) }}">Update</a></td>
         </tr>
     {% endfor %}
 </table>

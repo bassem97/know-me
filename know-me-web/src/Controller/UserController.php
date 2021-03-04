@@ -53,4 +53,20 @@ class UserController extends AbstractController
         return $this->render('user/addUser.html.twig', ['form' => $form->createView()]);
     }
 
+    /**
+     * @param $id
+     * @param UserRepository $repository
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route ("/Supp/{id}", name="d")
+     */
+    public function supprimerC($id, UserRepository $repository){
+        $user=$repository->find($id);
+        $entityManager=$this->getDoctrine()->getManager();
+        $entityManager->remove($user);
+        $entityManager->flush();
+        return $this->redirectToRoute("afficheUser");
+    }
+
+
+
 }
