@@ -39,6 +39,11 @@ class Room
      */
     private $user;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Reservation::class, mappedBy="idroom", cascade={"persist", "remove"})
+     */
+    private $reservation;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -111,6 +116,23 @@ class Room
                 $user->setJoinedAt(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReservation(): ?Reservation
+    {
+        return $this->reservation;
+    }
+
+    public function setReservation(Reservation $reservation): self
+    {
+        // set the owning side of the relation if necessary
+        if ($reservation->getIdroom() !== $this) {
+            $reservation->setIdroom($this);
+        }
+
+        $this->reservation = $reservation;
 
         return $this;
     }
