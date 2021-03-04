@@ -22,14 +22,14 @@
     </tr>
     {% for u in user %}
         <tr>
-            <td>{{ u.f_name }}</td>
-            <td>{{ u.l_name }}</td>
+            <td>{{ u.fname }}</td>
+            <td>{{ u.lname }}</td>
             <td>{{ u.email }}</td>
             <td>{{ u.pwd }}</td>
             <td>{{ u.location }}</td>
             <td>{{ u.photo }}</td>
-            <!--<td><a href="{{ path('d',{'id':t.id}) }}">Delete</a></td>
-            <td><a href="{{ path('update',{'id':t.id}) }}">Update</a></td>-->
+            <td><a href="{{ path('d',{'id':u.id}) }}">Delete</a></td>
+            <td><a href="{{ path('update',{'id':u.id}) }}">Update</a></td>
         </tr>
     {% endfor %}
 </table>
