@@ -49,22 +49,21 @@ class User
     private $photo;
 
     /**
-     * Many Users have Many Users.
-     * @ManyToMany(targetEntity="User", mappedBy="myMatchs")
+     *ORM\ManyToMany(targetEntity="User", mappedBy="myMatchs")
      */
+
     private $MatchsWithMe;
         /**
-     * Many Users have many Users.
-     * @ManyToMany(targetEntity="User", inversedBy="MatchsWithMe"
-     * @JoinTable(name="match",
-     *      joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="match_user_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="MatchsWithMe")
+     * @ORM\JoinTable(name="matchs",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="match_user_id", referencedColumnName="id")}
      *      )
      */
     private $myMatchs;
 
     public function __construct() {
-        $this->MarchsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->MatchsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myMatchs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
