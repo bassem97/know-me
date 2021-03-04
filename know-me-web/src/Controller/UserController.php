@@ -46,10 +46,27 @@ class UserController extends AbstractController
         $form->add('Ajouter', submitType::class);
         $form->handleRequest($request);
         if ($form-> isSubmitted() && $form-> isValid()){
+
+            $file=$user->getPhoto();
+            $fileName=md5(uniqid()).".".$file->guessExtension();
+
+            try {
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+                $e->getMessage();
+            }
+            $user->setPhoto($fileName);
             $em = $this->getDoctrine()->getManager();
-            $em ->persist($user);
-            $em-> flush();
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('notice','Photo ajoutée!');
             return $this->redirectToRoute("afficheUser");
+
+
+
         }
         return $this->render('user/addUser.html.twig', ['form' => $form->createView()]);
     }
@@ -75,6 +92,7 @@ class UserController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @Route ("user/update/{id}", name="update")
      */
+
     function update($id, UserRepository $repository,Request $request){
         $user=$repository->find($id);
         $form=$this->createForm(UserType::class, $user);

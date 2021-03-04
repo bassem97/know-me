@@ -44,7 +44,7 @@ class User
     private $location;
 
     /**
-     * @ORM\OneToOne(targetEntity="Photo", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Photo::class, cascade={"persist", "remove"}, mappedBy="user", orphanRemoval = true)
      */
     private $photo;
 
@@ -146,12 +146,12 @@ class User
         return $this;
     }
 
-    public function getPhoto(): ?string
+    public function getPhoto()
     {
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): self
+    public function setPhoto($photo)
     {
         $this->photo = $photo;
 
