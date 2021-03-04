@@ -35,13 +35,14 @@ class UserController extends AbstractController
 
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Resquest
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return Response
      * @Route("user/add")
      */
 
     function addUser(Request $request){
         $user = new User();
-        $form = $this->createForm(UserType::class);
+        $form = $this->createForm(UserType::class, $user);
         $form->add('Ajouter', submitType::class);
         $form->handleRequest($request);
         if ($form-> isSubmitted() && $form-> isValid()){
@@ -52,6 +53,8 @@ class UserController extends AbstractController
         }
         return $this->render('user/addUser.html.twig', ['form' => $form->createView()]);
     }
+
+
 
     /**
      * @param $id
@@ -65,6 +68,26 @@ class UserController extends AbstractController
         $entityManager->remove($user);
         $entityManager->flush();
         return $this->redirectToRoute("afficheUser");
+    }
+
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @Route ("user/update/{id}", name="update")
+     */
+    function update($id, UserRepository $repository,Request $request){
+        $user=$repository->find($id);
+        $form=$this->createForm(UserType::class, $user);
+        $form->add('update', SubmitType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $em=$this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirectToRoute("afficheUser");
+        }
+        return $this->render('user/Update.html.twig', [
+            'update_form'=>$form->createView()
+        ]);
     }
 
 

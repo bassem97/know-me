@@ -17,7 +17,7 @@ class UserType extends AbstractType
             ->add('l_name')
             ->add('pwd')
             ->add('location')
-            ->add('photo', ImageType::class)
+//            ->add('photo', ImageType::class)
         ;
     }
 
