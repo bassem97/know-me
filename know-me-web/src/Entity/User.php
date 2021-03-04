@@ -44,9 +44,28 @@ class User
     private $location;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToOne(targetEntity="Photo", cascade={"persist", "remove"})
      */
     private $photo;
+
+    /**
+     *ORM\ManyToMany(targetEntity="User", mappedBy="myMatchs")
+     */
+
+    private $MatchsWithMe;
+        /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="MatchsWithMe")
+     * @ORM\JoinTable(name="matchs",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="match_user_id", referencedColumnName="id")}
+     *      )
+     */
+    private $myMatchs;
+
+    public function __construct() {
+        $this->MatchsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->myMatchs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getId(): ?int
     {

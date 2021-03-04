@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1>Liste des utilisateurs</h1>
+<table border="1">
+    <tr>
+        <th>nom</th>
+        <th>prenom</th>
+        <th>email</th>
+        <th>mot de passe</th>
+        <th>location</th>
+        <th>Photos</th>
+        <th>Delete</th>
+        <th>Update</th>
+    </tr>
+    {% for u in user %}
+        <tr>
+            <td>{{ u.f_name }}</td>
+            <td>{{ u.l_name }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.pwd }}</td>
+            <td>{{ u.location }}</td>
+            <td>{{ u.photo }}</td>
+            <!--<td><a href="{{ path('d',{'id':t.id}) }}">Delete</a></td>
+            <td><a href="{{ path('update',{'id':t.id}) }}">Update</a></td>-->
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
