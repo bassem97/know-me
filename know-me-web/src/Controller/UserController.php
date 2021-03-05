@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
 
 class UserController extends AbstractController
 {
@@ -48,7 +50,7 @@ class UserController extends AbstractController
         if ($form-> isSubmitted() && $form-> isValid()){
 
             $file=$user->getPhoto();
-            $fileName=md5(uniqid()).".".$file->guessExtension();
+            $fileName=md5(uniqid()).".". $file->guessExtension();
 
             try {
                 $file->move(

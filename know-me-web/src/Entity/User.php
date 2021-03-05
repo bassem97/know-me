@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -69,16 +71,23 @@ class User
      */
     private $reservation;
 
-    /**
+    /** 
      * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="user")
      * @ORM\JoinColumn(nullable=false)
      */
     private $joined_At;
 
     
-    public function __construct() {
+    /*
+     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="users")
+     */
+    private $Event;
+
+    public function __construct()
+    {
         $this->MatchsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myMatchs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->Event = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,4 +197,27 @@ class User
     }
 
    
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvent(): Collection
+    {
+        return $this->Event;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->Event->contains($event)) {
+            $this->Event[] = $event;
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        $this->Event->removeElement($event);
+
+        return $this;
+    }
 }

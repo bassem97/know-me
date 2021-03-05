@@ -50,7 +50,7 @@ class RoomController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($event);
+            $em->persist($room);
             $em->flush();
             $this->addFlash('success', 'room ajoutée!');
         }

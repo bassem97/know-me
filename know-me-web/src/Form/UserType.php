@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class UserType extends AbstractType
 {
@@ -17,7 +18,10 @@ class UserType extends AbstractType
             ->add('l_name')
             ->add('pwd')
             ->add('location')
-            ->add('photo', ImageType::class, ['label'=>false])
+            ->add('photo', CollectionType::class, [
+                'entry_type' => ImageType::class,
+                'allow_add' => true,
+                'label'=>false])
         ;
     }
 
