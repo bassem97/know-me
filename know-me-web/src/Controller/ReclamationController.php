@@ -31,12 +31,15 @@ class ReclamationController extends AbstractController
      */
     function addReclamation(Request $request) : Response {
         $reclamation = new Reclamation();
+        
+
         $form = $this->createForm(ReclamationFormType::class,$reclamation);
         $form->add('Ajouter',submitType::class);
         $form->handleRequest($request);
         if ($form-> isSubmitted() && $form-> isValid()){
             $em = $this->getDoctrine()->getManager();
             $em ->persist($reclamation);
+            $reclamation->setCreatedAt(new \DateTime('now'));
             $em-> flush();
             return $this->redirectToRoute("Reclamation");
         }

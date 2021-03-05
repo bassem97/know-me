@@ -40,7 +40,7 @@ class UserController extends AbstractController
      * @Route("user/add")
      */
 
-    function addUser(Request $request){
+   /* function addUser(Request $request){
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->add('Ajouter', submitType::class);
@@ -69,7 +69,7 @@ class UserController extends AbstractController
 
         }
         return $this->render('user/addUser.html.twig', ['form' => $form->createView()]);
-    }
+    } $ */
 
 
 
