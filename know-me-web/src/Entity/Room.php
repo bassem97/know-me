@@ -25,16 +25,14 @@ class Room
     private $name;
 
     /**
-     * @ORM\OneToOne(targetEntity=Menu::class, inversedBy="room", cascade={"persist", "remove"})
+     * @ORM\OneToOne(target     * @ORM\OneToOne(targetEntity=Menu::class, inversedBy="room", cascade={"persist", "remove"})
      */
     private $menu_id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $description;
-
-    /** @var \Doctrine\Common\Collections\ArrayCollection
+      /** @var \Doctrine\Common\Collections\ArrayCollection
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="joined_At" )
      */
     private $user;
@@ -120,12 +118,13 @@ class Room
         return $this;
     }
 
+
     public function getReservation(): ?Reservation
     {
         return $this->reservation;
     }
 
-    public function setReservation(Reservation $reservation): self
+    public function setReservation(Reservation $reservation): void
     {
         // set the owning side of the relation if necessary
         if ($reservation->getIdroom() !== $this) {
@@ -133,7 +132,5 @@ class Room
         }
 
         $this->reservation = $reservation;
-
-        return $this;
     }
 }

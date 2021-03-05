@@ -11,8 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-
-
 class UserController extends AbstractController
 {
     /**
@@ -43,7 +41,7 @@ class UserController extends AbstractController
      */
 
     function addUser(Request $request){
-        $user = new User();
+        $user = new user();
         $form = $this->createForm(UserType::class, $user);
         $form->add('Ajouter', submitType::class);
         $form->handleRequest($request);
