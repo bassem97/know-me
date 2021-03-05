@@ -1,8 +1,5 @@
 <h1>Ajouter event</h1>
 {{ form_start(form)}}
- {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
+{{ form_errors(form.name) }}
+{{ form_widget(form.name) }}
 {{ form_end(form)}}
