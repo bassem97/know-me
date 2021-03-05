@@ -7,21 +7,17 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<h1>Liste des events</h1>
+		<h1>Event</h1>
 		<table border="1">
 			<tr>
 
-				<th>nom</th>
-				<th>Description</th>
-				<th>Date</th>
+				<th>Listes participants</th>
 
 			</tr>
 			{% for u in user.event %}
-				{% for t in u.users %}
+				{% for t in u.users %}  
 					<tr>
-						<td>{{ u.id }}</td>
 						<td>{{ t.id }}</td>
-						<td>ok</td>
 
 					</tr>
 				{% endfor %}

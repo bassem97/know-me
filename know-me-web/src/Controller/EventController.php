@@ -34,6 +34,8 @@ class EventController extends AbstractController
         $event = $repository->findAll();
         return $this->render('event/AfficheEvents.html.twig', ['event' => $event]);
     }
+    
+   
     /**
      * @Route("/gerant/AddEvent", name="add-event")
      */
@@ -117,6 +119,7 @@ class EventController extends AbstractController
     function ParticipateToEvent($id, Request $request, EventRepository $repository)
     {
         $em = $this->getDoctrine()->getManager();
+        
         $event = $repository->find($id);
         $user = new User();
         $user->setEmail("ska@test.com");
