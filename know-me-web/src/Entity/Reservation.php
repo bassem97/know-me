@@ -33,6 +33,12 @@ class Reservation
      */
     private $iduser;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Room::class, inversedBy="reservation", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $idroom;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +76,18 @@ class Reservation
     public function setIduser(User $iduser): self
     {
         $this->iduser = $iduser;
+
+        return $this;
+    }
+
+    public function getIdroom(): ?Room
+    {
+        return $this->idroom;
+    }
+
+    public function setIdroom(Room $idroom): self
+    {
+        $this->idroom = $idroom;
 
         return $this;
     }

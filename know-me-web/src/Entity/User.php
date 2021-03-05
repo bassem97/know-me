@@ -49,11 +49,25 @@ class User
      * @ORM\OneToMany(targetEntity=Photo::class, cascade={"persist", "remove"}, mappedBy="user", orphanRemoval = true)
      */
     private $photo;
+      /**
+     *ORM\ManyToMany(targetEntity="User", mappedBy="myDiscussions")
+     */
+
+
+    private $Discussion;
+        /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="Discussion")
+     * @ORM\JoinTable(name="Discussions",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="Discussion_user_id", referencedColumnName="id")}
+     *      )
+     */
+    private $myDiscussions;
 
     /**
-     * Many Users have Many Users.
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="myMatchs")
+     *ORM\ManyToMany(targetEntity="User", mappedBy="myDiscussions")
      */
+
 
     private $MatchsWithMe;
         /**
@@ -67,27 +81,16 @@ class User
     private $myMatchs;
 
     /**
-     * @ORM\OneToOne(targetEntity=Reservation::class, mappedBy="iduser", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Reclamation::class, mappedBy="sentBy")
      */
-    private $reservation;
+    private $reclamations;
 
-    /** 
-     * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="user")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $joined_At;
-
-    
-    /*
-     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="users")
-     */
-    private $Event;
-
-    public function __construct()
-    {
+    public function __construct() {
         $this->MatchsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myMatchs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Event = new ArrayCollection();
+        $this->Discussion = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->myDiscussions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reclamations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,31 +170,32 @@ class User
         return $this;
     }
 
-    public function getReservation(): ?Reservation
+    /**
+     * @return Collection|Reclamation[]
+     */
+    public function getReclamations(): Collection
     {
-        return $this->reservation;
+        return $this->reclamations;
     }
 
-    public function setReservation(Reservation $reservation): self
+    public function addReclamation(Reclamation $reclamation): self
     {
-        // set the owning side of the relation if necessary
-        if ($reservation->getIduser() !== $this) {
-            $reservation->setIduser($this);
+        if (!$this->reclamations->contains($reclamation)) {
+            $this->reclamations[] = $reclamation;
+            $reclamation->setSentBy($this);
         }
-
-        $this->reservation = $reservation;
 
         return $this;
     }
 
-    public function getJoinedAt(): ?Room
+    public function removeReclamation(Reclamation $reclamation): self
     {
-        return $this->joined_At;
-    }
-
-    public function setJoinedAt(?Room $joined_At): self
-    {
-        $this->joined_At = $joined_At;
+        if ($this->reclamations->removeElement($reclamation)) {
+            // set the owning side to null (unless already changed)
+            if ($reclamation->getSentBy() === $this) {
+                $reclamation->setSentBy(null);
+            }
+        }
 
         return $this;
     }

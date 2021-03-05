@@ -25,7 +25,7 @@ class Room
     private $name;
 
     /**
-     * @ORM\OneToOne(targetEntity=menu::class, inversedBy="room", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Menu::class, inversedBy="room", cascade={"persist", "remove"})
      */
     private $menu_id;
 
@@ -38,6 +38,11 @@ class Room
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="joined_At" )
      */
     private $user;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Reservation::class, mappedBy="idroom", cascade={"persist", "remove"})
+     */
+    private $reservation;
 
     public function __construct()
     {
@@ -111,6 +116,23 @@ class Room
                 $user->setJoinedAt(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReservation(): ?Reservation
+    {
+        return $this->reservation;
+    }
+
+    public function setReservation(Reservation $reservation): self
+    {
+        // set the owning side of the relation if necessary
+        if ($reservation->getIdroom() !== $this) {
+            $reservation->setIdroom($this);
+        }
+
+        $this->reservation = $reservation;
 
         return $this;
     }

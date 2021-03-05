@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1>Liste de reservation</h1>
+<table border="1">
+    <tr>
+        <th>Date</th>
+        <th>Nombre de personne</th>
+        <th>Utilisateur</th>
+        <th>Room</th>
+        <th>Supprimer</th>
+        <th>Update</th>
+    </tr>
+    {% for u in Reservation %}
+        <tr>
+            <td>{{ u.date }}</td>
+            <td>{{ u.nbpersonne }}</td>
+            <td>{{ u.iduser.name }}</td>
+            <td>{{ u.idroom.id }}</td>
+            
+
+            <td><a href="{{ path('d',{'id':u.id}) }}">Supprimer</a></td>
+            <td><a href="{{ path('update',{'id':u.id}) }}">Update</a></td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
