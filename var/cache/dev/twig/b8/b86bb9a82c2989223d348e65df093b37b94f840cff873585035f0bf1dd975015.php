@@ -178,6 +178,6 @@ class __TwigTemplate_db57b1808d889a881cc11e6ce74079293a34c72c3deb10447bd615224d5
 \t\t</table>
 \t</body>
 </html>
-", "event/participants.html.twig", "C:\\Users\\msi\\Desktop\\KnowMe\\know-me-web\\templates\\event\\participants.html.twig");
+", "event/participants.html.twig", "D:\\CoursEsprit\\cours3\\PIDEV\\know-me\\templates\\event\\participants.html.twig");
     }
 }

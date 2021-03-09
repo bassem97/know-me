@@ -204,6 +204,6 @@ class __TwigTemplate_3974c9e700a3d62bb3eaff466d65e98d69a544a37a0c5975e698715351e
         })|raw }}
     </div>
 {% endif %}
-", "@Twig/Exception/trace.html.twig", "C:\\Users\\msi\\Desktop\\KnowMe\\know-me-web\\vendor\\symfony\\twig-bundle\\Resources\\views\\Exception\\trace.html.twig");
+", "@Twig/Exception/trace.html.twig", "D:\\CoursEsprit\\cours3\\PIDEV\\know-me\\vendor\\symfony\\twig-bundle\\Resources\\views\\Exception\\trace.html.twig");
     }
 }

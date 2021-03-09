@@ -828,3 +828,8 @@ a19118,127.0.0.1,GET,http://127.0.0.1:8000/assetassets/vendor/venobox/venobox.cs
 e97846,127.0.0.1,GET,http://127.0.0.1:8000/,1615291635,,200
 a9bd8a,127.0.0.1,GET,http://127.0.0.1:8000/assetassets/vendor/venobox/venobox.css,1615291636,f1fd07,404
 f1fd07,127.0.0.1,GET,http://127.0.0.1:8000/assetassets/vendor/venobox/venobox.css,1615291636,,404
+14882f,127.0.0.1,GET,http://127.0.0.1:8000/,1615306992,,200
+3c0a4c,127.0.0.1,GET,http://127.0.0.1:8000/assetassets/vendor/venobox/venobox.css,1615306992,a5719c,404
+a5719c,127.0.0.1,GET,http://127.0.0.1:8000/assetassets/vendor/venobox/venobox.css,1615306992,,404
+da38fa,127.0.0.1,GET,http://127.0.0.1:8000/afficheRoom,1615307007,7a24ec,404
+7a24ec,127.0.0.1,GET,http://127.0.0.1:8000/afficheRoom,1615307007,,404

@@ -99,6 +99,6 @@ class __TwigTemplate_0ce0d8f158f0786644281e888f93e7fbc21e4deccb681cddaf10a635a48
             </trace>
 {% endfor %}
         </traces>
-", "@Twig/Exception/traces.xml.twig", "C:\\Users\\msi\\Desktop\\KnowMe\\know-me-web\\vendor\\symfony\\twig-bundle\\Resources\\views\\Exception\\traces.xml.twig");
+", "@Twig/Exception/traces.xml.twig", "D:\\CoursEsprit\\cours3\\PIDEV\\know-me\\vendor\\symfony\\twig-bundle\\Resources\\views\\Exception\\traces.xml.twig");
     }
 }

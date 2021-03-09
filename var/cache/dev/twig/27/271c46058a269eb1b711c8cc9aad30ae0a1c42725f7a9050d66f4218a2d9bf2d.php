@@ -106,6 +106,6 @@ class __TwigTemplate_74c023d0968617f8917ba897b86aa2d1bfdba8d5b07f98d1c50cd3dc4fe
 {{ include('@Twig/Exception/traces.txt.twig', { exception: e }, with_context = false) }}
 
 {% endfor %}
-", "@Twig/Exception/exception.txt.twig", "C:\\Users\\msi\\Desktop\\KnowMe\\know-me-web\\vendor\\symfony\\twig-bundle\\Resources\\views\\Exception\\exception.txt.twig");
+", "@Twig/Exception/exception.txt.twig", "D:\\CoursEsprit\\cours3\\PIDEV\\know-me\\vendor\\symfony\\twig-bundle\\Resources\\views\\Exception\\exception.txt.twig");
     }
 }
