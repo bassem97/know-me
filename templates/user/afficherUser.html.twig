@@ -1,0 +1,28 @@
+{#{% extends 'template.html.twig' %}#}
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1>Liste des utilisateurs</h1>
+<table border="1">
+    <tr>
+        <th>nom</th>
+        <th>prenom</th>
+        <th>email</th>
+        <th>location</th>
+{#        <th>Photos</th>#}
+        <th>Delete</th>
+        <th>Update</th>
+    </tr>
+    {% for u in user %}
+        <tr>
+            <td>{{ u.fname }}</td>
+            <td>{{ u.lname }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.location }}</td>
+{#            <td><img src="{{ asset('images/') ~ u.photo }}"#}
+{#                     alt="" style= "width: 50px !important;height: 50px !important" ></td>#}
+            <td><a href="{{ path('d',{'id':u.id}) }}">Delete</a></td>
+            <td><a href="{{ path('update',{'id':u.id}) }}">Update</a></td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

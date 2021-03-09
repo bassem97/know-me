@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Albums!{% endblock %}
+
+{% block body %}
+<h1>Albums photos</h1>
+<table border="1">
+    <tr>
+
+        <th>Photos</th>
+        <th>Delete</th>
+        <th>Update</th>
+    </tr>
+    {% for u in photo %}
+        <tr>
+            <td><img src="{{ asset('images/') ~ u.image }}"
+                     alt="" style= "width: 50px !important;height: 50px !important" ></td>
+            <td><a href="{{ path('delete',{'id':u.id}) }}">Delete</a></td>
+            <td><a href="{{ path('updateP',{'id':u.id}) }}">Update</a></td>
+        </tr>
+    {% endfor %}
+</table>
+    <p><a href="{{ path('addPhoto')}}">Ajouter une photo</a></p>
+{% endblock %}
