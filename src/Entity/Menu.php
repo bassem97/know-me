@@ -32,6 +32,11 @@ class Menu
      */
     private $img;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Room::class, mappedBy="menu", cascade={"persist", "remove"})
+     */
+    private $room;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,14 +66,36 @@ class Menu
         return $this;
     }
 
-    public function getImg(): ?string
+    public function getImg()
     {
         return $this->img;
     }
 
-    public function setImg(string $img): self
+    public function setImg($img)
     {
         $this->img = $img;
+
+        return $this;
+    }
+
+    public function getRoom(): ?Room
+    {
+        return $this->room;
+    }
+
+    public function setRoom(?Room $room): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($room === null && $this->room !== null) {
+            $this->room->setMenu(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($room !== null && $room->getMenu() !== $this) {
+            $room->setMenu($this);
+        }
+
+        $this->room = $room;
 
         return $this;
     }

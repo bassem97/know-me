@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1>Liste des Reclamations</h1>
+<table border="1">
+    <tr>
+        <th>content</th>
+        <th>createdAt</th>
+        <th>type</th>
+        <th>sentBy</th>
+        <th>Delete</th>
+        <th>Update</th>
+    </tr>
+    {% for reclamation in reclamations %}
+        <tr>
+            <td>{{ reclamation.content }}</td>
+            <td>{{ reclamation.createdAt|date("d/m/Y","Europe/Paris") }}</td>
+            <td>{{ reclamation.type }}</td>
+            <td>{{ reclamation.sentBy.fname}} {{ reclamation.sentBy.lname}}</td>
+            <td><a href="{{ path('deleteReclamation',{'id':reclamation.id}) }}">Delete</a></td>
+            <td><a href="{{ path('updateReclamation',{'id':reclamation.id}) }}">Update</a></td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
