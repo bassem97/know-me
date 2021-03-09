@@ -58,11 +58,6 @@ class Translator extends BaseTranslator implements WarmableInterface
     private $scannedDirectories;
 
     /**
-     * @var string[]
-     */
-    private $enabledLocales;
-
-    /**
      * Constructor.
      *
      * Available options:
@@ -74,11 +69,10 @@ class Translator extends BaseTranslator implements WarmableInterface
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(ContainerInterface $container, MessageFormatterInterface $formatter, string $defaultLocale, array $loaderIds = [], array $options = [], array $enabledLocales = [])
+    public function __construct(ContainerInterface $container, MessageFormatterInterface $formatter, string $defaultLocale, array $loaderIds = [], array $options = [])
     {
         $this->container = $container;
         $this->loaderIds = $loaderIds;
-        $this->enabledLocales = $enabledLocales;
 
         // check option names
         if ($diff = array_diff(array_keys($options), array_keys($this->options))) {
@@ -95,19 +89,16 @@ class Translator extends BaseTranslator implements WarmableInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @return string[]
      */
-    public function warmUp(string $cacheDir)
+    public function warmUp($cacheDir)
     {
         // skip warmUp when translator doesn't use cache
         if (null === $this->options['cache_dir']) {
             return;
         }
 
-        $localesToWarmUp = $this->enabledLocales ?: array_merge($this->getFallbackLocales(), [$this->getLocale()], $this->resourceLocales);
-
-        foreach (array_unique($localesToWarmUp) as $locale) {
+        $locales = array_merge($this->getFallbackLocales(), [$this->getLocale()], $this->resourceLocales);
+        foreach (array_unique($locales) as $locale) {
             // reset catalogue in case it's already loaded during the dump of the other locales.
             if (isset($this->catalogues[$locale])) {
                 unset($this->catalogues[$locale]);
@@ -115,11 +106,9 @@ class Translator extends BaseTranslator implements WarmableInterface
 
             $this->loadCatalogue($locale);
         }
-
-        return [];
     }
 
-    public function addResource(string $format, $resource, string $locale, string $domain = null)
+    public function addResource($format, $resource, $locale, $domain = null)
     {
         if ($this->resourceFiles) {
             $this->addResourceFiles();
@@ -130,7 +119,7 @@ class Translator extends BaseTranslator implements WarmableInterface
     /**
      * {@inheritdoc}
      */
-    protected function initializeCatalogue(string $locale)
+    protected function initializeCatalogue($locale)
     {
         $this->initialize();
         parent::initializeCatalogue($locale);

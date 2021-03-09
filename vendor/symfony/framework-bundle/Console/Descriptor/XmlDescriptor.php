@@ -12,9 +12,7 @@
 namespace Symfony\Bundle\FrameworkBundle\Console\Descriptor;
 
 use Symfony\Component\Console\Exception\LogicException;
-use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\DependencyInjection\Alias;
-use Symfony\Component\DependencyInjection\Argument\AbstractArgument;
 use Symfony\Component\DependencyInjection\Argument\IteratorArgument;
 use Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
 use Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
@@ -106,34 +104,6 @@ class XmlDescriptor extends Descriptor
     protected function describeContainerEnvVars(array $envs, array $options = [])
     {
         throw new LogicException('Using the XML format to debug environment variables is not supported.');
-    }
-
-    protected function describeContainerDeprecations(ContainerBuilder $builder, array $options = []): void
-    {
-        $containerDeprecationFilePath = sprintf('%s/%sDeprecations.log', $builder->getParameter('kernel.build_dir'), $builder->getParameter('kernel.container_class'));
-        if (!file_exists($containerDeprecationFilePath)) {
-            throw new RuntimeException('The deprecation file does not exist, please try warming the cache first.');
-        }
-
-        $logs = unserialize(file_get_contents($containerDeprecationFilePath));
-
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->appendChild($deprecationsXML = $dom->createElement('deprecations'));
-
-        $formattedLogs = [];
-        $remainingCount = 0;
-        foreach ($logs as $log) {
-            $deprecationsXML->appendChild($deprecationXML = $dom->createElement('deprecation'));
-            $deprecationXML->setAttribute('count', $log['count']);
-            $deprecationXML->appendChild($dom->createElement('message', $log['message']));
-            $deprecationXML->appendChild($dom->createElement('file', $log['file']));
-            $deprecationXML->appendChild($dom->createElement('line', $log['line']));
-            $remainingCount += $log['count'];
-        }
-
-        $deprecationsXML->setAttribute('remainingCount', $remainingCount);
-
-        $this->writeDocument($dom);
     }
 
     private function writeDocument(\DOMDocument $dom)
@@ -410,9 +380,6 @@ class XmlDescriptor extends Descriptor
                 }
             } elseif ($argument instanceof Definition) {
                 $argumentXML->appendChild($dom->importNode($this->getContainerDefinitionDocument($argument, null, false, true)->childNodes->item(0), true));
-            } elseif ($argument instanceof AbstractArgument) {
-                $argumentXML->setAttribute('type', 'abstract');
-                $argumentXML->appendChild(new \DOMText($argument->getText()));
             } elseif (\is_array($argument)) {
                 $argumentXML->setAttribute('type', 'collection');
 

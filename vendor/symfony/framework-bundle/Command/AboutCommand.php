@@ -61,19 +61,13 @@ EOT
         /** @var KernelInterface $kernel */
         $kernel = $this->getApplication()->getKernel();
 
-        if (method_exists($kernel, 'getBuildDir')) {
-            $buildDir = $kernel->getBuildDir();
-        } else {
-            $buildDir = $kernel->getCacheDir();
-        }
-
         $rows = [
             ['<info>Symfony</>'],
             new TableSeparator(),
             ['Version', Kernel::VERSION],
             ['Long-Term Support', 4 === Kernel::MINOR_VERSION ? 'Yes' : 'No'],
-            ['End of maintenance', Kernel::END_OF_MAINTENANCE.(self::isExpired(Kernel::END_OF_MAINTENANCE) ? ' <error>Expired</>' : ' (<comment>'.self::daysBeforeExpiration(Kernel::END_OF_MAINTENANCE).'</>)')],
-            ['End of life', Kernel::END_OF_LIFE.(self::isExpired(Kernel::END_OF_LIFE) ? ' <error>Expired</>' : ' (<comment>'.self::daysBeforeExpiration(Kernel::END_OF_LIFE).'</>)')],
+            ['End of maintenance', Kernel::END_OF_MAINTENANCE.(self::isExpired(Kernel::END_OF_MAINTENANCE) ? ' <error>Expired</>' : '')],
+            ['End of life', Kernel::END_OF_LIFE.(self::isExpired(Kernel::END_OF_LIFE) ? ' <error>Expired</>' : '')],
             new TableSeparator(),
             ['<info>Kernel</>'],
             new TableSeparator(),
@@ -82,7 +76,6 @@ EOT
             ['Debug', $kernel->isDebug() ? 'true' : 'false'],
             ['Charset', $kernel->getCharset()],
             ['Cache directory', self::formatPath($kernel->getCacheDir(), $kernel->getProjectDir()).' (<comment>'.self::formatFileSize($kernel->getCacheDir()).'</>)'],
-            ['Build directory', self::formatPath($buildDir, $kernel->getProjectDir()).' (<comment>'.self::formatFileSize($buildDir).'</>)'],
             ['Log directory', self::formatPath($kernel->getLogDir(), $kernel->getProjectDir()).' (<comment>'.self::formatFileSize($kernel->getLogDir()).'</>)'],
             new TableSeparator(),
             ['<info>PHP</>'],
@@ -95,6 +88,16 @@ EOT
             ['APCu', \extension_loaded('apcu') && filter_var(ini_get('apc.enabled'), \FILTER_VALIDATE_BOOLEAN) ? 'true' : 'false'],
             ['Xdebug', \extension_loaded('xdebug') ? 'true' : 'false'],
         ];
+
+        if ($dotenv = self::getDotenvVars()) {
+            $rows = array_merge($rows, [
+                new TableSeparator(),
+                ['<info>Environment (.env)</>'],
+                new TableSeparator(),
+            ], array_map(function ($value, $name) {
+                return [$name, $value];
+            }, $dotenv, array_keys($dotenv)));
+        }
 
         $io->table([], $rows);
 
@@ -127,10 +130,15 @@ EOT
         return false !== $date && new \DateTime() > $date->modify('last day of this month 23:59:59');
     }
 
-    private static function daysBeforeExpiration(string $date): string
+    private static function getDotenvVars(): array
     {
-        $date = \DateTime::createFromFormat('d/m/Y', '01/'.$date);
+        $vars = [];
+        foreach (explode(',', $_SERVER['SYMFONY_DOTENV_VARS'] ?? $_ENV['SYMFONY_DOTENV_VARS'] ?? '') as $name) {
+            if ('' !== $name && isset($_ENV[$name])) {
+                $vars[$name] = $_ENV[$name];
+            }
+        }
 
-        return (new \DateTime())->diff($date->modify('last day of this month 23:59:59'))->format('in %R%a days');
+        return $vars;
     }
 }

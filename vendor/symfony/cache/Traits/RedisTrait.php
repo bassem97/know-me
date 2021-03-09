@@ -11,7 +11,6 @@
 
 namespace Symfony\Component\Cache\Traits;
 
-use Predis\Command\Redis\UNLINK;
 use Predis\Connection\Aggregate\ClusterInterface;
 use Predis\Connection\Aggregate\RedisCluster;
 use Predis\Response\Status;
@@ -57,7 +56,7 @@ trait RedisTrait
         }
 
         if (!$redisClient instanceof \Redis && !$redisClient instanceof \RedisArray && !$redisClient instanceof \RedisCluster && !$redisClient instanceof \Predis\ClientInterface && !$redisClient instanceof RedisProxy && !$redisClient instanceof RedisClusterProxy) {
-            throw new InvalidArgumentException(sprintf('"%s()" expects parameter 1 to be Redis, RedisArray, RedisCluster or Predis\ClientInterface, "%s" given.', __METHOD__, get_debug_type($redisClient)));
+            throw new InvalidArgumentException(sprintf('"%s()" expects parameter 1 to be Redis, RedisArray, RedisCluster or Predis\ClientInterface, "%s" given.', __METHOD__, \is_object($redisClient) ? \get_class($redisClient) : \gettype($redisClient)));
         }
 
         if ($redisClient instanceof \Predis\ClientInterface && $redisClient->getOptions()->exceptions) {
@@ -333,7 +332,7 @@ trait RedisTrait
     /**
      * {@inheritdoc}
      */
-    protected function doHave(string $id)
+    protected function doHave($id)
     {
         return (bool) $this->redis->exists($id);
     }
@@ -341,7 +340,7 @@ trait RedisTrait
     /**
      * {@inheritdoc}
      */
-    protected function doClear(string $namespace)
+    protected function doClear($namespace)
     {
         $cleared = true;
         if ($this->redis instanceof \Predis\ClientInterface) {
@@ -363,8 +362,7 @@ trait RedisTrait
                 // As documented in Redis documentation (http://redis.io/commands/keys) using KEYS
                 // can hang your server when it is executed against large databases (millions of items).
                 // Whenever you hit this scale, you should really consider upgrading to Redis 2.8 or above.
-                $unlink = version_compare($info['redis_version'], '4.0', '>=') ? 'UNLINK' : 'DEL';
-                $cleared = $host->eval("local keys=redis.call('KEYS',ARGV[1]..'*') for i=1,#keys,5000 do redis.call('$unlink',unpack(keys,i,math.min(i+4999,#keys))) end return 1", $evalArgs[0], $evalArgs[1]) && $cleared;
+                $cleared = $host->eval("local keys=redis.call('KEYS',ARGV[1]..'*') for i=1,#keys,5000 do redis.call('DEL',unpack(keys,i,math.min(i+4999,#keys))) end return 1", $evalArgs[0], $evalArgs[1]) && $cleared;
                 continue;
             }
 
@@ -394,28 +392,13 @@ trait RedisTrait
         }
 
         if ($this->redis instanceof \Predis\ClientInterface && $this->redis->getConnection() instanceof ClusterInterface) {
-            static $del;
-            $del = $del ?? (class_exists(UNLINK::class) ? 'unlink' : 'del');
-
-            $this->pipeline(function () use ($ids, $del) {
+            $this->pipeline(function () use ($ids) {
                 foreach ($ids as $id) {
-                    yield $del => [$id];
+                    yield 'del' => [$id];
                 }
             })->rewind();
         } else {
-            static $unlink = true;
-
-            if ($unlink) {
-                try {
-                    $unlink = false !== $this->redis->unlink($ids);
-                } catch (\Throwable $e) {
-                    $unlink = false;
-                }
-            }
-
-            if (!$unlink) {
-                $this->redis->del($ids);
-            }
+            $this->redis->del($ids);
         }
 
         return true;

@@ -61,7 +61,7 @@ class TestContainer extends Container
      *
      * @return array|bool|float|int|string|null
      */
-    public function getParameter(string $name)
+    public function getParameter($name)
     {
         return $this->getPublicContainer()->getParameter($name);
     }
@@ -69,7 +69,7 @@ class TestContainer extends Container
     /**
      * {@inheritdoc}
      */
-    public function hasParameter(string $name): bool
+    public function hasParameter($name): bool
     {
         return $this->getPublicContainer()->hasParameter($name);
     }
@@ -77,7 +77,7 @@ class TestContainer extends Container
     /**
      * {@inheritdoc}
      */
-    public function setParameter(string $name, $value)
+    public function setParameter($name, $value)
     {
         $this->getPublicContainer()->setParameter($name, $value);
     }
@@ -85,7 +85,7 @@ class TestContainer extends Container
     /**
      * {@inheritdoc}
      */
-    public function set(string $id, $service)
+    public function set($id, $service)
     {
         $this->getPublicContainer()->set($id, $service);
     }
@@ -100,8 +100,10 @@ class TestContainer extends Container
 
     /**
      * {@inheritdoc}
+     *
+     * @return object|null
      */
-    public function get($id, int $invalidBehavior = /* self::EXCEPTION_ON_INVALID_REFERENCE */ 1): ?object
+    public function get($id, $invalidBehavior = /* self::EXCEPTION_ON_INVALID_REFERENCE */ 1)
     {
         return $this->getPrivateContainer()->has($id) ? $this->getPrivateContainer()->get($id) : $this->getPublicContainer()->get($id, $invalidBehavior);
     }
@@ -109,7 +111,7 @@ class TestContainer extends Container
     /**
      * {@inheritdoc}
      */
-    public function initialized(string $id): bool
+    public function initialized($id): bool
     {
         return $this->getPublicContainer()->initialized($id);
     }
