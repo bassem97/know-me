@@ -8,3 +8,10 @@ bafca9,127.0.0.1,GET,http://127.0.0.1:8000/assetassets/vendor/venobox/venobox.cs
 a8a3fe,127.0.0.1,POST,http://127.0.0.1:8000/menu/Add,1615314162,,302
 339384,127.0.0.1,GET,http://127.0.0.1:8000/AfficherMenu,1615314163,66d371,500
 66d371,127.0.0.1,GET,http://127.0.0.1:8000/AfficherMenu,1615314163,,500
+ce1208,127.0.0.1,GET,http://127.0.0.1:8000/login,1615327321,,200
+1c3ed7,127.0.0.1,GET,http://127.0.0.1:8000/assetassets/vendor/venobox/venobox.css,1615327323,98028b,404
+98028b,127.0.0.1,GET,http://127.0.0.1:8000/assetassets/vendor/venobox/venobox.css,1615327323,,404
+614558,127.0.0.1,GET,http://127.0.0.1:8000/menu/Add,1615327571,,200
+4f8354,127.0.0.1,POST,http://127.0.0.1:8000/menu/Add,1615327585,,302
+8d09c1,127.0.0.1,GET,http://127.0.0.1:8000/AfficherMenu,1615327585,12a23e,500
+12a23e,127.0.0.1,GET,http://127.0.0.1:8000/AfficherMenu,1615327585,,500
