@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\AdminRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,6 +18,9 @@ class Admin
     private $id;
 
     /**
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $email;
