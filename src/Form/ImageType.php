@@ -16,8 +16,8 @@ class ImageType extends AbstractType
         ->add('bio')
         ->add('user')
         ->add('image', FileType::class, ['label'=>'Ajouter une image'])
-        
-        ;
+        ->add('image', FileType::class, array('label'=>'Ajouter une image','data_class' => null)
+                );
     }
 
     public function configureOptions(OptionsResolver $resolver)

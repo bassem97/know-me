@@ -39,19 +39,26 @@ class PhotoController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return Response
-     * @Route("photo/add")
+     * @Route("photo/add", name="addPhoto")
      */
 
     function addPhoto(Request $request){
-        $photo = new Photo();
-        $form = $this->createForm(ImageType::class, $photo);
+        $photoos = new Photo();
+        $form = $this->createForm(ImageType::class, $photoos);
         $form->add('Ajouter', submitType::class);
         $form->handleRequest($request);
         if ($form-> isSubmitted() && $form-> isValid()){
 
-            $file=$photo->getImage();
+            //recuperer les valeurs sous forme d'objet photo
+            $photoos = $form->getData();
+
+            //recupere le file soumis
+            $file=$photoos->getImage();
+
+            //creer un nom unique
             $fileName=md5(uniqid()).".".$file->guessExtension();
 
+            //deplacer le fichier
             try {
                 $file->move(
                     $this->getParameter('images_directory'),
@@ -60,17 +67,69 @@ class PhotoController extends AbstractController
             } catch (FileException $e) {
                 $e->getMessage();
             }
-            $photo->setImage($fileName);
+
+            //donner le nom a l'image
+            $photoos->setImage($fileName);
 
             $em = $this->getDoctrine()->getManager();
-            $em ->persist($photo);
+            $em ->persist($photoos);
             $em-> flush();
 
-                    $this->addFlash('notice','Photo ajoutée!');
-                    return $this->redirectToRoute("affichePhoto");
-
-
+            $this->addFlash('notice','Photo ajoutée!');
+            return $this->redirectToRoute("affichePhoto");
         }
         return $this->render('photo/addPhoto.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @param $id
+     * @param PhotoRepository $repository
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route ("/Supp/{id}", name="delete")
+     */
+    public function supprimerPhoto($id, PhotoRepository $repository){
+        $photo=$repository->find($id);
+        $entityManager=$this->getDoctrine()->getManager();
+        $entityManager->remove($photo);
+        $entityManager->flush();
+        return $this->redirectToRoute("affichePhoto");
+    }
+
+
+
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @Route ("updatePhoto/{id}", name="updateP")
+     */
+    function update($id, PhotoRepository $repository, Request $request)
+    {
+        $photo = $repository->find($id);
+        $form = $this->createForm(ImageType::class, $photo);
+        $form->add('update', SubmitType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $photo->getImage();
+            $fileName = md5(uniqid()) . "." . $file->guessExtension();
+            if ($file) {
+                try {
+                    $file->move(
+                        $this->getParameter('images_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    $e->getMessage();
+                }
+            }
+            $photo->setImage($fileName);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($photo);
+            $em->flush();
+            return $this->redirectToRoute("affichePhoto");
+        }
+        return $this->render('photo/updatePhoto.html.twig', [
+            'update_photo' => $form->createView()
+        ]);
     }
 }

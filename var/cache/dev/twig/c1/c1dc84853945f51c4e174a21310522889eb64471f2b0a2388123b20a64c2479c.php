@@ -88,6 +88,6 @@ class __TwigTemplate_7b2186680e8761c3a84729c39f8f2ac5e8b2c859422f2b0ff35073dfae5
 {{ form_errors(form.name) }}
 {{ form_widget(form.name) }}
 {{ form_end(form)}}
-", "event/AddEvent.html.twig", "D:\\CoursEsprit\\cours3\\PIDEV\\know-me\\templates\\event\\AddEvent.html.twig");
+", "event/AddEvent.html.twig", "D:\\CoursEsprit\\cours3\\know-me\\templates\\event\\AddEvent.html.twig");
     }
 }

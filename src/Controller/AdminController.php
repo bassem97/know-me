@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Admin;
 use App\Form\AdminFormType;
 
+
 class AdminController extends AbstractController
 {
     /**
@@ -24,7 +25,7 @@ class AdminController extends AbstractController
     }
         /**
      * @param AdminRepository $repository
-     * @Route ("/Admin", name="afficheAdmin")
+     * @Route ("/Adminall", name="afficheAdmin")
      */
 
     public function afficher()

@@ -30,6 +30,14 @@
 
 					{% endfor %}
 
+
+			</tr>
+			{% for u in user.event %}
+				{% for t in u.users %}  
+					<tr>
+						<td>{{ t.id }}</td>
+
+					</tr>
 				{% endfor %}
 			{% endfor %}
 		</table>

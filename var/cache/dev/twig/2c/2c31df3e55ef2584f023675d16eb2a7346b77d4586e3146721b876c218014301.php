@@ -77,6 +77,6 @@ class __TwigTemplate_d31aa7cfed3e58c76ddecdf6d22d65f6fb39c4a387540725e7b73308c3e
         return new Source("<h1>Ajouter event</h1>
 {{ form_start(update_form)}}
 
-{{ form_end(update_form)}}", "event/UpdateEvent.html.twig", "D:\\CoursEsprit\\cours3\\PIDEV\\know-me\\templates\\event\\UpdateEvent.html.twig");
+{{ form_end(update_form)}}", "event/UpdateEvent.html.twig", "D:\\CoursEsprit\\cours3\\know-me\\templates\\event\\UpdateEvent.html.twig");
     }
 }

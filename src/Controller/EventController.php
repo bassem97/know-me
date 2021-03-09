@@ -35,6 +35,8 @@ class EventController extends AbstractController
         $event = $repository->findAll();
         return $this->render('event/AfficheEvents.html.twig', ['event' => $event]);
     }
+    
+   
     /**
      * @Route("/gerant/AddEvent", name="add-event")
      */
@@ -118,10 +120,7 @@ class EventController extends AbstractController
     function ParticipateToEvent($id, Request $request, EventRepository $repository,UserRepository $rep)
     {
         $em = $this->getDoctrine()->getManager();
-<<<<<<< HEAD:src/Controller/EventController.php
-=======
         $users = $rep->findAll();
->>>>>>> dc10a86e91b69021cb33e24016ba33b1fbd18bc1:know-me-web/src/Controller/EventController.php
         $event = $repository->find($id);
         $user = new User();
         $user->setEmail("ska@test.com");
@@ -135,7 +134,7 @@ class EventController extends AbstractController
         $em->persist($user);
         $em->persist($event);
         $em->flush();
-        return $this->render('event/participants.html.twig', ['user' => $user,'allusers'=>$users]);
+        return $this->render('event/participants.html.twig', ['user' => $user]);
 
     }
 }

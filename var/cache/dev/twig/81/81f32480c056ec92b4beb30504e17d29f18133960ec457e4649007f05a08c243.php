@@ -189,6 +189,6 @@ class __TwigTemplate_8bcfa1cdbb50569d4d5449adb78f0fcbaadff83cf255434c14f84981c82
         </div>
     </div>
 </div>
-", "@Twig/Exception/traces.html.twig", "D:\\CoursEsprit\\cours3\\PIDEV\\know-me\\vendor\\symfony\\twig-bundle\\Resources\\views\\Exception\\traces.html.twig");
+", "@Twig/Exception/traces.html.twig", "D:\\CoursEsprit\\cours3\\know-me\\vendor\\symfony\\twig-bundle\\Resources\\views\\Exception\\traces.html.twig");
     }
 }

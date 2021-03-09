@@ -4,24 +4,29 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('f_name')
-            ->add('l_name')
-            ->add('pwd')
+            ->add('email', EmailType::class, ['required' => true])
+            ->add('f_name', TextType::class, ['required' => true])
+            ->add('l_name', TextType::class, ['required' => true])
+            ->add('pwd', RepeatedType::class, array(
+                'type'=>PasswordType::class,
+                'required'=> true,
+                'first_options'=> array('label'=>'Mot de passe'),
+                'second_options'=> array('label'=>'Confirmer mot de passe'),
+            ))
             ->add('location')
-            ->add('photo', CollectionType::class, [
-                'entry_type' => ImageType::class,
-                'allow_add' => true,
-                'label'=>false])
+            //->add('photo', ImageType::class, ['label'=>false])
         ;
     }
 

@@ -9,12 +9,20 @@
 </head>
 <body>
 <h1>Liste des utilisateurs</h1>
+{% extends 'base.html.twig' %}
+
+{% block title %}Albums!{% endblock %}
+
+{% block body %}
+<h1>Albums photos</h1>
 <table border="1">
     <tr>
 
         <th>Photos</th>
 {#        <th>Delete</th>#}
 {#        <th>Update</th>#}
+        <th>Delete</th>
+        <th>Update</th>
     </tr>
     {% for u in photo %}
         <tr>
@@ -27,3 +35,10 @@
 </table>
 </body>
 </html>
+            <td><a href="{{ path('delete',{'id':u.id}) }}">Delete</a></td>
+            <td><a href="{{ path('updateP',{'id':u.id}) }}">Update</a></td>
+        </tr>
+    {% endfor %}
+</table>
+    <p><a href="{{ path('addPhoto')}}">Ajouter une photo</a></p>
+{% endblock %}

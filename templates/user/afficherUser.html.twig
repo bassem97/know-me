@@ -8,6 +8,9 @@
     <title>Document</title>
 </head>
 <body>
+{#{% extends 'template.html.twig' %}#}
+{% extends 'base.html.twig' %}
+{% block body %}
 <h1>Liste des utilisateurs</h1>
 <table border="1">
     <tr>
@@ -17,6 +20,8 @@
         <th>mot de passe</th>
         <th>location</th>
         <th>Photos</th>
+        <th>location</th>
+{#        <th>Photos</th>#}
         <th>Delete</th>
         <th>Update</th>
     </tr>
@@ -29,6 +34,9 @@
             <td>{{ u.location }}</td>
             <td><img src="{{ asset('images/') ~ u.photo }}"
                      alt="" style= "width: 50px !important;height: 50px !important" ></td>
+            <td>{{ u.location }}</td>
+{#            <td><img src="{{ asset('images/') ~ u.photo }}"#}
+{#                     alt="" style= "width: 50px !important;height: 50px !important" ></td>#}
             <td><a href="{{ path('d',{'id':u.id}) }}">Delete</a></td>
             <td><a href="{{ path('update',{'id':u.id}) }}">Update</a></td>
         </tr>
@@ -36,3 +44,4 @@
 </table>
 </body>
 </html>
+{% endblock %}

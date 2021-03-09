@@ -10,7 +10,7 @@ if (in_array(PHP_SAPI, ['cli', 'phpdbg'], true)) {
 }
 
 require dirname(__DIR__, 3).''.\DIRECTORY_SEPARATOR.'vendor/autoload.php';
-require __DIR__.'/ContainerDJP00S2/srcApp_KernelDevDebugContainer.php';
+require __DIR__.'/ContainerGWesyaN/srcApp_KernelDevDebugContainer.php';
 
 $classes = [];
 $classes[] = 'Symfony\Bundle\FrameworkBundle\FrameworkBundle';
@@ -33,16 +33,37 @@ $classes[] = 'Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser';
 $classes[] = 'Symfony\Bundle\FrameworkBundle\EventListener\ResolveControllerNameSubscriber';
 $classes[] = 'Symfony\Component\HttpFoundation\RequestMatcher';
 $classes[] = 'Symfony\Component\DependencyInjection\ServiceLocator';
+$classes[] = 'App\Controller\AdminController';
 $classes[] = 'App\Controller\EventController';
 $classes[] = 'App\Controller\GerantController';
 $classes[] = 'App\Controller\IndexController';
 $classes[] = 'App\Controller\LoginController';
+$classes[] = 'App\Controller\MenuController';
+$classes[] = 'App\Controller\MessageController';
+$classes[] = 'App\Controller\PhotoController';
+$classes[] = 'App\Controller\ReclamationController';
 $classes[] = 'App\Controller\RegisterController';
+$classes[] = 'App\Controller\ReservationController';
+$classes[] = 'App\Controller\RoomController';
 $classes[] = 'App\Controller\UserController';
+$classes[] = 'App\Form\AdminFormType';
 $classes[] = 'App\Form\EventType';
+$classes[] = 'App\Form\ImageType';
+$classes[] = 'App\Form\MenuType';
+$classes[] = 'App\Form\MessageFormType';
+$classes[] = 'App\Form\ReclamationFormType';
+$classes[] = 'App\Form\ReservationFormType';
+$classes[] = 'App\Form\RoomType';
+$classes[] = 'App\Form\UserType';
+$classes[] = 'App\Repository\AdminRepository';
 $classes[] = 'App\Repository\EventRepository';
 $classes[] = 'App\Repository\GerantRepository';
 $classes[] = 'App\Repository\MenuRepository';
+$classes[] = 'App\Repository\MessageRepository';
+$classes[] = 'App\Repository\PhotoRepository';
+$classes[] = 'App\Repository\ReclamationRepository';
+$classes[] = 'App\Repository\ReservationRepository';
+$classes[] = 'App\Repository\RoomRepository';
 $classes[] = 'App\Repository\UserRepository';
 $classes[] = 'Doctrine\Bundle\DoctrineBundle\Dbal\ManagerRegistryAwareConnectionProvider';
 $classes[] = 'Doctrine\Bundle\DoctrineBundle\Registry';
