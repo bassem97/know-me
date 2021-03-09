@@ -12,14 +12,24 @@
 			<tr>
 
 				<th>Listes participants</th>
+				<th>Email</th>
 
 			</tr>
 			{% for u in user.event %}
-				{% for t in u.users %}  
-					<tr>
-						<td>{{ t.id }}</td>
+				{% for t in u.users %}
+					{% for x in allusers %}
+						{% if x.id == t.id %}
 
-					</tr>
+							<tr>
+								<td>{{ t.id }}</td>
+
+								<td>{{ x.email }}</td>
+
+							</tr>
+						{% endif %}
+
+					{% endfor %}
+
 				{% endfor %}
 			{% endfor %}
 		</table>

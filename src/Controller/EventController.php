@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Entity\User;
 use App\Form\EventType;
 use App\Repository\EventRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
@@ -114,9 +115,13 @@ class EventController extends AbstractController
     /**
      * @Route("/AfficherEvent/{id}", name="participate")
      */
-    function ParticipateToEvent($id, Request $request, EventRepository $repository)
+    function ParticipateToEvent($id, Request $request, EventRepository $repository,UserRepository $rep)
     {
         $em = $this->getDoctrine()->getManager();
+<<<<<<< HEAD:src/Controller/EventController.php
+=======
+        $users = $rep->findAll();
+>>>>>>> dc10a86e91b69021cb33e24016ba33b1fbd18bc1:know-me-web/src/Controller/EventController.php
         $event = $repository->find($id);
         $user = new User();
         $user->setEmail("ska@test.com");
@@ -130,7 +135,7 @@ class EventController extends AbstractController
         $em->persist($user);
         $em->persist($event);
         $em->flush();
-        return $this->render('event/participants.html.twig', ['user' => $user]);
+        return $this->render('event/participants.html.twig', ['user' => $user,'allusers'=>$users]);
 
     }
 }
