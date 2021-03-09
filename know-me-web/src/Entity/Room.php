@@ -6,7 +6,7 @@ use App\Repository\RoomRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use App\Entity\Menu;
 /**
  * @ORM\Entity(repositoryClass=RoomRepository::class)
  */
@@ -24,15 +24,19 @@ class Room
      */
     private $name;
 
-    /**
-     * @ORM\OneToOne(target     * @ORM\OneToOne(targetEntity=Menu::class, inversedBy="room", cascade={"persist", "remove"})
-     */
-    private $menu_id;
-
-    /**
+      /**
      * @ORM\Column(type="string", length=255)
      */
-      /** @var \Doctrine\Common\Collections\ArrayCollection
+    private $description;
+
+      /**
+     * @ORM\OneToOne(targetEntity=Menu::class, inversedBy="room", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $menu;
+
+    
+      /** 
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="joined_At" )
      */
     private $user;
@@ -64,14 +68,14 @@ class Room
         return $this;
     }
 
-    public function getMenuId(): ?menu
+    public function getMenu(): ?Menu
     {
-        return $this->menu_id;
+        return $this->menu;
     }
 
-    public function setMenuId(?menu $menu_id): self
+    public function setMenu(?Menu $menu): self
     {
-        $this->menu_id = $menu_id;
+        $this->menu = $menu;
 
         return $this;
     }

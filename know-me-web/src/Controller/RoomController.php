@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\RoomType;
 use App\Entity\Room;
+
 use App\Repository\RoomRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -39,7 +40,7 @@ class RoomController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return Response
-     * @Route("room/add")
+     * @Route("room/add", name="addRoom")
      */
 
     function AddRoom(Request $request)
@@ -52,12 +53,16 @@ class RoomController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($room);
             $em->flush();
+            return $this->redirectToRoute("afficheRoom");
             $this->addFlash('success', 'room ajoutée!');
         }
         return $this->render('room/AddRoom.html.twig', [
             'form' => $form->createView()
         ]);
+
     }
+
+    //done
 
 
 
@@ -65,7 +70,7 @@ class RoomController extends AbstractController
      * @param $id
      * @param RoomRepository $repository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route ("/deleteRoom/{id}", name="d")
+     * @Route ("/deleteRoom/{id}", name="deleteRoom")
      */
     public function deleteRoom($id, RoomRepository $repository){
         $room=$repository->find($id);

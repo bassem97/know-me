@@ -8,12 +8,12 @@
     <title>Document</title>
 </head>
 <body>
-<h1>Liste des utilisateurs</h1>
+<h1>Liste des Menu</h1>
 <table border="1">
     <tr>
     <th>id</th>
         <th>name</th>
-        <th>menu_id</th>
+    <th>menu</th>
         <th>description</th>
         <th>user</th>
     </tr>
@@ -22,7 +22,8 @@
                     <td>{{ r.id }}</td>
 
             <td>{{ r.name }}</td>
-            <td>{{ r.menu_id.getName() }}</td>
+            <td>{{ r.menu.name }}</td>
+
             <td>{{ r.description }}</td>
             <td>        
             <tr>
@@ -37,8 +38,10 @@
             </tr>
             
             </td>
-               <td><a href="{{ path('d',{'id':r.id}) }}">Delete</a></td>
-            <td><a href="{{ path('update',{'id':r.id}) }}">Update</a></td>
+               <td><a href="{{ path('deleteRoom',{'id':r.id}) }}">Delete</a></td>
+            <td><a href="{{ path('updateRoom',{'id':r.id}) }}">Update</a></td>
+            <td><a href="{{ path('addRoom')}}">Ajouter Room</a></td>
+
         </tr>
     {% endfor %}
 </table>

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\menu;
+use App\Entity\Menu;
 use App\Form\MenuType;
 use App\Repository\MenuRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +30,7 @@ class MenuController extends AbstractController
 
     function AddMenu(Request $request)
     {
-        $menu = new menu();
+        $menu = new Menu();
         $form = $this->CreateForm(MenuType::class, $menu);
         $form->add('add', SubmitType::class);
         $form->handleRequest($request);

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=MenuRepository::class)
  */
-class menu
+class Menu
 {
     /**
      * @ORM\Id
@@ -33,7 +33,7 @@ class menu
     private $img;
 
     /**
-     * @ORM\OneToOne(targetEntity=Room::class, mappedBy="menu_id", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Room::class, mappedBy="menu", cascade={"persist", "remove"})
      */
     private $room;
 
@@ -87,12 +87,12 @@ class menu
     {
         // unset the owning side of the relation if necessary
         if ($room === null && $this->room !== null) {
-            $this->room->setMenuId(null);
+            $this->room->setMenu(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($room !== null && $room->getMenuId() !== $this) {
-            $room->setMenuId($this);
+        if ($room !== null && $room->getMenu() !== $this) {
+            $room->setMenu($this);
         }
 
         $this->room = $room;
