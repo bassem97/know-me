@@ -32,10 +32,9 @@ class MenuController extends AbstractController
     {
         $menu = new Menu();
         $form = $this->CreateForm(MenuType::class, $menu);
-        $form->add('add', SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $menu->getImg();
+            $file = $form->get('img')->getData();
             $fileName = md5(uniqid()) . "." . $file->guessExtension();
             if ($file) {
                 try {
@@ -75,6 +74,19 @@ class MenuController extends AbstractController
         $form->add('update', SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('img')->getData();
+            $fileName = md5(uniqid()) . "." . $file->guessExtension();
+            if ($file) {
+                try {
+                    $file->move(
+                        $this->getParameter('images_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    $e->getMessage();
+                }
+            }
+            $menu->setImg($fileName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($menu);
             $em->flush();

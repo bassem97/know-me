@@ -1,2 +1,32 @@
-<h1>Ajouter Menu</h1>
-{{ form(form)}}
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	KnowMe
+{% endblock %}
+
+{% block body %}
+
+<h1 style="">Ajouter Menu</h1>
+
+<div class="modal-body">
+              <form method="POST" action="#" enctype="multipart/form-data">
+                {{ form_start(form)}}
+                <div class="form-group">
+                    {{ form_widget(form.name,{'attr':{'placeholder':'nom','class':'form-control'}}) }}
+                </div>
+                 <div class="form-group">
+                    {{ form_widget(form.description,{'attr':{'placeholder':'description','class':'form-control'}}) }}
+                </div>
+                  <div class="form-group">
+                    {{ form_widget(form.img,{'attr':{'placeholder':'uploader image'}}) }}
+                </div>
+              
+                <div class="text-center mt-3">
+                  <input value="ajouter" type="submit" class="submit-btn3"/>
+                </div>
+                {{ form_end(form)}}
+               
+                
+              </form>
+            </div>
+{% endblock %}

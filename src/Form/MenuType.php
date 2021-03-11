@@ -15,7 +15,7 @@ class MenuType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('img',FileType::class, array('data_class' => null))
+            ->add('img',FileType::class, ['label' => 'upload image', 'mapped' => false])
         ;
     }
 

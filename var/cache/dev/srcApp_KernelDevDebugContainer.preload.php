@@ -10,7 +10,7 @@ if (in_array(PHP_SAPI, ['cli', 'phpdbg'], true)) {
 }
 
 require dirname(__DIR__, 3).''.\DIRECTORY_SEPARATOR.'vendor/autoload.php';
-require __DIR__.'/ContainerKSNvxvR/srcApp_KernelDevDebugContainer.php';
+require __DIR__.'/ContainerMRNxc92/srcApp_KernelDevDebugContainer.php';
 
 $classes = [];
 $classes[] = 'Symfony\Bundle\FrameworkBundle\FrameworkBundle';
@@ -25,6 +25,8 @@ $classes[] = 'Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle';
 $classes[] = 'Symfony\Bundle\SecurityBundle\SecurityBundle';
 $classes[] = 'Twig\Extra\TwigExtraBundle\TwigExtraBundle';
 $classes[] = 'Symfony\Bundle\WebServerBundle\WebServerBundle';
+$classes[] = 'Frcho\Bundle\CrontaskBundle\FrchoCrontaskBundle';
+$classes[] = 'Glooby\TaskBundle\GloobyTaskBundle';
 $classes[] = 'Symfony\Component\HttpClient\TraceableHttpClient';
 $classes[] = 'Symfony\Contracts\HttpClient\HttpClientInterface';
 $classes[] = 'Symfony\Component\HttpClient\HttpClient';
@@ -68,6 +70,7 @@ $classes[] = 'App\Repository\UserRepository';
 $classes[] = 'Doctrine\Bundle\DoctrineBundle\Dbal\ManagerRegistryAwareConnectionProvider';
 $classes[] = 'Doctrine\Bundle\DoctrineBundle\Registry';
 $classes[] = 'Doctrine\DBAL\Tools\Console\Command\RunSqlCommand';
+$classes[] = 'Frcho\Bundle\CrontaskBundle\Command\CronTasksRunCommand';
 $classes[] = 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController';
 $classes[] = 'Symfony\Bundle\FrameworkBundle\Controller\TemplateController';
 $classes[] = 'Symfony\Component\Cache\DoctrineProvider';
@@ -256,6 +259,21 @@ $classes[] = 'Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser';
 $classes[] = 'Symfony\Component\HttpKernel\Fragment\InlineFragmentRenderer';
 $classes[] = 'Sensio\Bundle\FrameworkExtraBundle\Request\ArgumentNameConverter';
 $classes[] = 'Sensio\Bundle\FrameworkExtraBundle\EventListener\IsGrantedListener';
+$classes[] = 'Frcho\Bundle\CrontaskBundle\Form\CronTaskType';
+$classes[] = 'Frcho\Bundle\CrontaskBundle\Util\DefaultCommands';
+$classes[] = 'Glooby\TaskBundle\Task\PingTask';
+$classes[] = 'Glooby\TaskBundle\Queue\QueueMonitor';
+$classes[] = 'Glooby\TaskBundle\Queue\QueueProcessor';
+$classes[] = 'Glooby\TaskBundle\Queue\QueuePruner';
+$classes[] = 'Glooby\TaskBundle\Queue\QueueScheduler';
+$classes[] = 'Glooby\TaskBundle\Schedule\ScheduleRegistry';
+$classes[] = 'Glooby\TaskBundle\Synchronizer\ScheduleSynchronizer';
+$classes[] = 'Glooby\TaskBundle\Command\Scheduler\PruneCommand';
+$classes[] = 'Glooby\TaskBundle\Command\Scheduler\RunCommand';
+$classes[] = 'Glooby\TaskBundle\Command\Scheduler\SyncCommand';
+$classes[] = 'Glooby\TaskBundle\Manager\TaskManager';
+$classes[] = 'Glooby\TaskBundle\Command\Task\RunCommand';
+$classes[] = 'Glooby\TaskBundle\Task\TaskRunner';
 $classes[] = 'Symfony\Component\HttpKernel\HttpKernel';
 $classes[] = 'Symfony\Component\HttpKernel\Controller\TraceableControllerResolver';
 $classes[] = 'Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver';

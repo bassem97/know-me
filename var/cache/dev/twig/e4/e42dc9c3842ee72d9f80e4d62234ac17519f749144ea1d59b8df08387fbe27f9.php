@@ -174,6 +174,6 @@ class __TwigTemplate_9c1d63c661268aa8c2abe5debd63d64f0f520fd236ece6e06882ced24e2
         {% endif %}
     </div>
 {% endblock %}
-", "@WebProfiler/Profiler/open.html.twig", "D:\\CoursEsprit\\cours3\\know-me\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\open.html.twig");
+", "@WebProfiler/Profiler/open.html.twig", "C:\\Users\\Wiem\\Desktop\\Project\\know-me\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\open.html.twig");
     }
 }

@@ -154,6 +154,6 @@ class __TwigTemplate_d910e50933723104c87a7edb2b5ddeb9e0d04695d45df7597241dcf33bf
     </ul>
 </div>
 {% endblock %}
-", "event/index.html.twig", "D:\\CoursEsprit\\cours3\\know-me\\templates\\event\\index.html.twig");
+", "event/index.html.twig", "C:\\Users\\Wiem\\Desktop\\Project\\know-me\\templates\\event\\index.html.twig");
     }
 }

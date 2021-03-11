@@ -32,6 +32,65 @@ class Menu
      */
     private $img;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isExpired = false;
+
+     /**
+      * @ORM\Column(type="datetime")
+     */
+    private $date ;
+
+    /**
+      * @ORM\Column(type="datetime")
+     */
+    private $expirationDate ;
+
+
+    public function __construct()
+    {
+        date_default_timezone_set("Europe/Madrid");
+        $this->date = new \DateTime();
+        $this->expirationDate = new \DateTime("+1 day");
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getExpireDate(): ?\DateTimeInterface
+    {
+        return $this->expirationDate;
+    }
+
+    public function setExpireDate(\DateTimeInterface $date): self
+    {
+        $this->expirationDate = $expirationDate;
+
+        return $this;
+    }
+
+    public function getIsExpired(): ?bool
+    {
+        return $this->isExpired;
+    }
+
+    public function setIsExpired(bool $isExpired): self
+    {
+        $this->isExpired = $isExpired;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
