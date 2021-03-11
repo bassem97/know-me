@@ -23,8 +23,8 @@ return [
         '/' => [[['_route' => 'app_index_home', '_controller' => 'App\\Controller\\IndexController::home'], null, null, null, false, false, null]],
         '/login' => [[['_route' => 'login', '_controller' => 'App\\Controller\\LoginController::index'], null, null, null, false, false, null]],
         '/menu' => [[['_route' => 'menu', '_controller' => 'App\\Controller\\MenuController::index'], null, null, null, false, false, null]],
-        '/menu/Add' => [[['_route' => 'add-menu', '_controller' => 'App\\Controller\\MenuController::AddMenu'], null, null, null, false, false, null]],
-        '/AfficherMenu' => [[['_route' => 'menu-class', '_controller' => 'App\\Controller\\MenuController::Affiche'], null, null, null, false, false, null]],
+        '/menu/add' => [[['_route' => 'add-menu', '_controller' => 'App\\Controller\\MenuController::AddMenu'], null, null, null, false, false, null]],
+        '/pdf' => [[['_route' => 'menu_pdf', '_controller' => 'App\\Controller\\MenuController::listPDF'], null, null, null, false, false, null]],
         '/message' => [[['_route' => 'message', '_controller' => 'App\\Controller\\MessageController::index'], null, null, null, false, false, null]],
         '/sendMessage' => [[['_route' => 'sendMessage', '_controller' => 'App\\Controller\\MessageController::addMessage'], null, null, null, false, false, null]],
         '/messages' => [[['_route' => 'messages', '_controller' => 'App\\Controller\\MessageController::messages'], null, null, null, false, false, null]],
@@ -82,13 +82,19 @@ return [
                     .'|DeleteEvent/([^/]++)(*:423)'
                     .'|updateMenu/([^/]++)(*:450)'
                 .')'
-                .'|/AfficherEvent/([^/]++)(*:482)'
-                .'|/event/Delete/([^/]++)(*:512)'
-                .'|/modifyMessage/([^/]++)(*:543)'
-                .'|/Supp/([^/]++)(?'
-                    .'|(*:568)'
+                .'|/Afficher(?'
+                    .'|Event/([^/]++)(*:485)'
+                    .'|Menu/([^/]++)(*:506)'
                 .')'
-                .'|/room/update/([^/]++)(*:598)'
+                .'|/m(?'
+                    .'|enu/search/([^/]++)(*:539)'
+                    .'|odifyMessage/([^/]++)(*:568)'
+                .')'
+                .'|/event/Delete/([^/]++)(*:599)'
+                .'|/Supp/([^/]++)(?'
+                    .'|(*:624)'
+                .')'
+                .'|/room/update/([^/]++)(*:654)'
             .')/?$}sD',
     ],
     [ // $dynamicRoutes
@@ -109,14 +115,16 @@ return [
         383 => [[['_route' => 'update', '_controller' => 'App\\Controller\\UserController::update'], ['id'], null, null, false, true, null]],
         423 => [[['_route' => 'delete-event', '_controller' => 'App\\Controller\\EventController::DeleteEvent'], ['id'], null, null, false, true, null]],
         450 => [[['_route' => 'updateM', '_controller' => 'App\\Controller\\MenuController::update'], ['id'], null, null, false, true, null]],
-        482 => [[['_route' => 'participate', '_controller' => 'App\\Controller\\EventController::ParticipateToEvent'], ['id'], null, null, false, true, null]],
-        512 => [[['_route' => 'deleteM', '_controller' => 'App\\Controller\\MenuController::Delete'], ['id'], null, null, false, true, null]],
-        543 => [[['_route' => 'modifyMessage', '_controller' => 'App\\Controller\\MessageController::modifyMessage'], ['id'], null, null, false, true, null]],
-        568 => [
+        485 => [[['_route' => 'participate', '_controller' => 'App\\Controller\\EventController::ParticipateToEvent'], ['id'], null, null, false, true, null]],
+        506 => [[['_route' => 'menu-class', '_controller' => 'App\\Controller\\MenuController::Affiche'], ['crit'], null, null, false, true, null]],
+        539 => [[['_route' => 'search', '_controller' => 'App\\Controller\\MenuController::search'], ['text'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        568 => [[['_route' => 'modifyMessage', '_controller' => 'App\\Controller\\MessageController::modifyMessage'], ['id'], null, null, false, true, null]],
+        599 => [[['_route' => 'deleteM', '_controller' => 'App\\Controller\\MenuController::Delete'], ['id'], null, null, false, true, null]],
+        624 => [
             [['_route' => 'delete', '_controller' => 'App\\Controller\\PhotoController::supprimerPhoto'], ['id'], null, null, false, true, null],
             [['_route' => 'd', '_controller' => 'App\\Controller\\UserController::supprimerC'], ['id'], null, null, false, true, null],
         ],
-        598 => [
+        654 => [
             [['_route' => 'updateRoom', '_controller' => 'App\\Controller\\RoomController::update'], ['id'], null, null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],

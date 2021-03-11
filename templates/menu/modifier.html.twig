@@ -9,8 +9,26 @@
 
 
 <h1>Update menu</h1>
-{{ form_start(update_form)}}
+	<div class="modal-body">
+		<form method="POST" action="#" enctype="multipart/form-data">
+			{{ form_start(update_form)}}
+			<div class="form-group">
+				{{ form_widget(update_form.name,{'attr':{'placeholder':'nom','class':'form-control'}}) }}
+			</div>
+			<div class="form-group">
+				{{ form_widget(update_form.description,{'attr':{'placeholder':'description','class':'form-control'}}) }}
+			</div>
+			<div class="form-group">
+				{{ form_widget(update_form.img,{'attr':{'placeholder':'uploader image'}}) }}
+			</div>
 
-{{ form_end(update_form)}}
+			<div class="text-center mt-3">
+				<input value="modifier" type="submit" class="submit-btn3"/>
+			</div>
+			{{ form_end(update_form)}}
+
+
+		</form>
+	</div>
 
 {% endblock %}

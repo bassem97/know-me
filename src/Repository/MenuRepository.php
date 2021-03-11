@@ -19,6 +19,22 @@ class MenuRepository extends ServiceEntityRepository
         parent::__construct($registry, Menu::class);
     }
 
+    /**
+     * @param string|null $term
+     * @return User[]
+     */
+    public function findAllWithSearch(?string $term): array
+    {
+        $qb = $this->createQueryBuilder('m');
+        if ($term) {
+            $qb->andWhere('m.name LIKE :term OR m.description LIKE :term OR m.etat')
+                ->setParameter('term', '%' . $term . '%');
+        }
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Menu[] Returns an array of Menu objects
     //  */
@@ -47,4 +63,16 @@ class MenuRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function sortById($crit, $order): array
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT u
+            FROM App\Entity\Menu u
+            ORDER BY u.' . $crit . ' ' . $order
+        );
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
 }

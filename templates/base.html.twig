@@ -15,8 +15,8 @@
 		{# Run `composer require symfony/webpack-encore-bundle`
 																										           and uncomment the following Encore helpers to start using Symfony UX #}
 		{% block stylesheets %}
-			<link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-			<link href="{{ asset("assetassets/vendor/venobox/venobox.css") }}" rel="stylesheet">
+			<link href="{{ asset("assets/vendor/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">
+			<link href="{{ asset("assets/vendor/venobox/venobox.css") }}" rel="stylesheet">
 			<link href="{{ asset("assets/vendor/font-awesome/css/font-awesome.min.css") }}" rel="stylesheet">
 			<link href="{{ asset("assets/vendor/owl.carousel/assets/owl.carousel.min.css") }}" rel="stylesheet">
 			<link href="{{ asset("assets/vendor/aos/aos.css") }}" rel="stylesheet">
@@ -44,9 +44,11 @@
 		{% endblock %}
 	</head>
 	<body>
-		{{ include("nav/navbar.html.twig")}}
+		{% block header %}
+			{{ include("nav/navbar.html.twig")}}
+		{% endblock %}
 
-		{% block body %}{% endblock %}
+			{% block body %}
+			{% endblock %}
 	</body>
 </html>
-        

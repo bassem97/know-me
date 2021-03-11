@@ -30,7 +30,6 @@ class RoomController extends AbstractController
      * @param RoomRepository $repository
      * @Route ("/afficheRoom", name="afficheRoom")
      */
-
     function afficher(RoomRepository $repository){
         $room = $repository->findAll();
         return $this->render('room/afficherRoom.html.twig', ['room'=> $room]);
@@ -38,7 +37,7 @@ class RoomController extends AbstractController
 
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      * @return Response
      * @Route("room/add", name="addRoom")
      */
@@ -82,7 +81,7 @@ class RoomController extends AbstractController
 
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      * @Route ("room/update/{id}", name="updateRoom")
      */
 

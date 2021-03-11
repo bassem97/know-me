@@ -1,0 +1,149 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}menu index{% endblock %}#}
+
+
+{% block stylesheets%}
+    <style>
+        /*#trusr:hover{*/
+        /*    background-color: #212529;*/
+        /*    color: white;*/
+        /*    cursor: pointer;*/
+        /*}*/
+        /*#icons{*/
+        /*    background: none;*/
+        /*    color: inherit;*/
+        /*    border: none;*/
+        /*    padding: 0;*/
+        /*    font: inherit;*/
+        /*    cursor: pointer;*/
+        /*    outline: inherit;*/
+        /*}*/
+        table td, table th {
+            border: 1px solid black;
+        }
+        th, .idTr{
+            background-color: skyblue;
+        }
+
+        #table{
+            width: 600px;
+            /*margin : 100px;*/
+            border: 2px solid black;
+            border-radius: 5px;
+            caption-side: top;
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: revert;
+            border-spacing: 0;
+            /*display: revert;*/
+
+        }
+        /*.header-info-left{*/
+        /*    margin-left: auto;*/
+        /*    margin-right: auto;*/
+        /*    alignment: center !important;*/
+        /*    align-content: center !important;*/
+        /*}*/
+        /*h1{*/
+        /*    text-align: center;*/
+        /*    padding: 20px;*/
+        /*    font-size: 50px;*/
+        /*}*/
+        /*.services-area{*/
+        /*    width: 300px;*/
+        /*    border: 2px solid black;*/
+        /*    margin-left: auto !important;*/
+        /*    margin-right: auto !important;*/
+        /*    margin-bottom: 10px;*/
+        /*}*/
+    </style>
+{% endblock %}
+
+{#{% set sorted="FFFFFFFFF" %}#}
+
+{#{% block content %}#}
+{#    {% set test=false %}#}
+{#    {% if  click %}#}
+{#        <div id="alert"> asba</div>#}
+{#    {% endif %}#}
+
+{#    <h1>La liste des utilisateurs</h1>#}
+
+{#    <div class="header-info-left">#}
+{#        <li class="d-none d-lg-block">#}
+{#            <div class="form-box flex-center-start table-responsive">#}
+{#                <input  class="services-area" type="text"    placeholder="Rechercher par id,nom...">#}
+{#            </div>#}
+{#        </li>#}
+{#        <div class="input-group no-border" style="width: 400px;margin-left: auto;margin-right: auto">#}
+{#            <input type="text" value="" class="form-control" id="search" placeholder="Chercher utilisateur par id,nom...">#}
+{#            <button type="submit" class="btn btn-white btn-round btn-just-icon">#}
+{#                <i class="material-icons">search</i>#}
+{#                <div class="ripple-container"></div>#}
+{#            </button>#}
+{#        </div>#}
+{#    </div>#}
+
+{#<div class="table-responsive">#}
+{#    <div class="input-group rounded flex-center-start" style="width: 500px">#}
+
+{#        <span class="input-group-text border-0" id="search-addon">#}
+{#            <i class="fas fa-search"></i>#}
+{#        </span>#}
+{#    </div>#}
+{% block body %}
+    <table class="table"  id="table" >
+        <caption><h1>Liste des menus</h1></caption>
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Etat</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for menu in menus %}
+{#            {{ sorted }}#}
+            <tr>
+                <td>{{ menu.name }}</td>
+                <td>{{ menu.description }}</td>
+                <td><img src="/images/{{menu.img}}"  style="width: 50px !important;height: 50px !important">
+                </td>
+                <td>
+                    {% if menu.isExpired%}
+                        <div style="color:red;font-size:20px">Expiré</div>
+                    {% endif %}
+                    {% if not menu.isExpired%}
+                        <div style="color:green;font-size:20px">Valide</div>
+                    {% endif %}
+                </td>
+            </tr>
+
+            {#                <script type="text/javascript">#}
+            {#                    document.getElementById("trusr").onclick = function () {#}
+            {#                        location.href = "/menu/{{ menu.id | nzo_encrypt }}";#}
+            {#                    };#}
+            {#                </script>#}
+
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{#</div>#}
+
+{#{% endblock %}#}
+{#{% block javascripts %}{{  parent()  }}#}
+{#<script>#}
+{#    let search = document.getElementById('search');#}
+{#    search.addEventListener("keyup", event =>{#}
+{#        console.log(search.value);#}
+{#        if(event.keyCode === 13 && search.value !== "" && search.value !== "/" && search.value !== "+" && search.value !== "-" && search.value !== "*" )#}
+{#             window.location='/menu/search/'+search.value;#}
+{#    })#}
+
+{#</script>#}
+{#{% endblock %}#}
+

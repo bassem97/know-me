@@ -4,39 +4,245 @@
 	KnowMe
 {% endblock %}
 
+{% block stylesheets %}{{ parent() }}
+	<style>
+		#trusr:hover{
+			background-color: #212529;
+			color: white;
+			cursor: pointer;
+		}
+		#myInput {
+			/*background-image: url('/css/searchicon.png');*/
+			background-position: 10px 10px;
+			background-repeat: no-repeat;
+			width: 100%;
+			font-size: 16px;
+			padding: 12px 20px 12px 40px;
+			border: 1px solid #ddd;
+			margin-bottom: 12px;
+		}
+		#icons{
+			background: none;
+			color: inherit;
+			border: none;
+			padding: 0;
+			font: inherit;
+			cursor: pointer;
+			outline: inherit;
+		}
+		#table{
+			width: 1000px;
+			height: 600px;
+			/*margin : 100px;*/
+			border: 3px solid black;
+			caption-side: top;
+			margin-left: auto;
+			margin-right: auto;
+			table-layout: fixed;
+		}
+		.header-info-left{
+			margin-left: auto;
+			margin-right: auto;
+			alignment: center !important;
+			align-content: center !important;
+		}
+		#image:hover{
+			border: 2px solid red;
+			border-radius: 4px;
+		}
+		h1{
+			text-align: center;
+			padding: 20px;
+			font-size: 50px;
+		}
+		td{
+			color: white;
+			text-align: center;
+			vertical-align: middle;
+			background-color: rgba(187,188,187,0.59);
+		}
+		tr.th{
+			position: sticky;
+		}
+
+		/*#table-wrapper {*/
+		/*	position:relative;*/
+		/*}*/
+
+		#table-scroll {
+			height:450px;
+			overflow:auto;
+			margin-top:20px;
+		}
+
+
+		/*#table-wrapper table {*/
+		/*	width:80%;*/
+
+
+		/*}*/
+
+		/*#table-wrapper table thead th .text {*/
+
+		/*	z-index:2;*/
+		/*	height:500px;*/
+		/*	width:100%;*/
+		/*	border:1px solid red;*/
+		/*}*/
+
+	</style>
+	<link href="{{ asset("lightbox2/dist/css/lightbox.css") }}" rel="stylesheet" />
+{% endblock %}
+
 
 {% block body %}
-		<h1>Liste de Menu</h1>
-		<table border="1">
-			<tr>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Image</th>
-				<th>Etat</th>
-				
-			</tr>
-			{% for u in menu %}
-				<tr>
-					<td>{{ u.name }}</td>
-					<td>{{ u.description }}</td>
-					<td><img src="/images/{{u.img}}" alt="" style="width: 50px !important;height: 50px !important">
-                    </td>
-					<td>
-						{% if u.isExpired%}
-							<div style="color:red;font-size:20px">Expiré</div>
-						{% endif %}
-						{% if not u.isExpired%}
-							<div style="color:green;font-size:20px">Valide</div>
-						{% endif %}
-					</td>
-					<td>
-						<a href="{{ path('deleteM',{'id':u.id}) }}" ><div style="color:black">Delete</div></a>
-					</td>
-					<td>
-						<a href="{{ path('updateM',{'id':u.id}) }}"><div style="color:black"> Update</div></a>
-					</td>
-				</tr>
-			{% endfor %}
-		</table>
-	{% endblock %}
+<section id="intro">
+	<div data-aos="zoom-in" data-aos-delay="100">
+	<div style="margin-top: 100px;margin-left: 500px;margin-right: auto">
+{#		<table border="1">#}
+{#			<tr>#}
+{#				<th>Name</th>#}
+{#				<th>Description</th>#}
+{#				<th>Image</th>#}
+{#				<th>Etat</th>#}
+
+{#			</tr>#}
+{#			{% for u in menu %}#}
+{#				<tr>#}
+{#					<td>{{ u.name }}</td>#}
+{#					<td>{{ u.description }}</td>#}
+{#					<td><img src="/images/{{u.img}}" alt="" style="width: 50px !important;height: 50px !important">#}
+{#					</td>#}
+{#					<td>#}
+{#						{% if u.isExpired%}#}
+{#							<div style="color:red;font-size:20px">Expiré</div>#}
+{#						{% endif %}#}
+{#						{% if not u.isExpired%}#}
+{#							<div style="color:green;font-size:20px">Valide</div>#}
+{#						{% endif %}#}
+{#					</td>#}
+{#					<td>#}
+{#						<a href="{{ path('deleteM',{'id':u.id}) }}" ><div style="color:black">Delete</div></a>#}
+{#					</td>#}
+{#					<td>#}
+{#						<a href="{{ path('updateM',{'id':u.id}) }}"><div style="color:black"> Update</div></a>#}
+{#					</td>#}
+{#				</tr>#}
+{#			{% endfor %}#}
+{#		</table>#}
+	</div>
+
+	<div class="table-responsive" style="margin-left:auto; ">
+		{#    <div class="input-group rounded flex-center-start" style="width: 500px">#}
+
+		{#        <span class="input-group-text border-0" id="search-addon">#}
+		{#            <i class="fas fa-search"></i>#}
+		{#        </span>#}
+		{#    </div>#}
+
+		<h1 class="mb-4 pb-0">Liste des menus</span>
+
+		</h1>
+
+		<div style="display: inline-flex;  align-items: center;margin-bottom: 5px">
+			<a href="{{ path('menu_pdf') }}">
+				<div class="download" style="position:center;margin-left: 300px">
+					<button class="btn btn-dark"> Telecharger </button>
+				</div>
+			</a>
+
+			<a href="{{ path('add-menu') }}">
+				<div class="download" style="position:center;margin-left: 50px">
+					<button class="btn btn-dark" > Ajouter </button>
+				</div>
+			</a>
+		</div>
+		<div id="table-wrapper">
+			<div id="table-scroll">
+					<table class="table"  id="table" >
+						<thead class="thead-dark">
+						<tr>
+							<th > <a href="{{ path('menu-class',{'crit':'name'}) }}" >Nom</a></th>
+							<th> <a href="{{ path('menu-class',{'crit':'description'}) }}" >Description</a></th>
+							<th>Image</th>
+							<th><a href="{{ path('menu-class',{'crit':'isExpired'}) }}" >Etat</a></th>
+							<th >actions</th>
+						</tr>
+						</thead>
+						<tbody>
+
+						{% for menu in menu %}
+							{#				<tr id="trusr" onclick="window.location='/menu/show/{{ menu.id | nzo_encrypt }}'">#}
+							<tr>
+								<td>{{ menu.name }}</td>
+								<td>{{ menu.description }}</td>
+								<td>
+									<a href="/images/{{menu.img}}" data-lightbox="image-1" data-title="My caption">
+										<img src="/images/{{menu.img}}" id="image" alt="" style="width: 100px !important;height: 50px !important">
+									</a>
+								</td>
+								<td>
+									{% if menu.isExpired%}
+										<div style="color:red;font-size:20px">Expiré</div>
+									{% endif %}
+									{% if not menu.isExpired%}
+										<div style="color:green;font-size:20px">Valide</div>
+									{% endif %}
+								</td>
+								<td>
+									<a  href="{{ path('deleteM',{'id':menu.id}) }}">
+										<button style="height: 30px;font-size: 10px" class="btn btn-danger" > supprimer </button>
+									</a>
+									<a  href="{{ path('updateM',{'id':menu.id}) }}">
+										<button style="height: 30px;font-size: 10px" class="btn btn-info" > modifier </button>
+									</a>
+								</td>
+							</tr>
+
+							{#                <script type="text/javascript">#}
+							{#                    document.getElementById("trusr").onclick = function () {#}
+							{#                        location.href = "/menu/{{ menu.id | nzo_encrypt }}";#}
+							{#                    };#}
+							{#                </script>#}
+
+						{% else %}
+							<tr>
+								<td colspan="8">no records found</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+			</div>
+		</div>
+
+
+	</div>
+
+{% endblock %}
+{% block javascript %}{{ parent() }}
+
+		<script src="{{asset("lightbox2/dist/js/lightbox.js") }}">
+
+		</script>
+		<script>
+			lightbox.option({
+				'resizeDuration': 200,
+				'wrapAround': true
+			});
+		</script>
+		<script>
+
+
+			let btn = document.getElementById("btn");
+			let search = document.getElementById("search");
+			btn.addEventListener("click", event =>{
+				console.log(search.value);
+					window.location='/menu/search/'+search.value;
+			})
+
+		</script>
+
+	</div>
+</section>
+{% endblock %}
 

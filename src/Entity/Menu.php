@@ -74,7 +74,7 @@ class Menu
 
     public function setExpireDate(\DateTimeInterface $date): self
     {
-        $this->expirationDate = $expirationDate;
+        $this->expirationDate = $date;
 
         return $this;
     }
