@@ -1012,3 +1012,6 @@ c3c3f8,127.0.0.1,POST,http://127.0.0.1:8001/menu/Add,1615387708,,302
 e56c07,127.0.0.1,GET,http://127.0.0.1:8001/AfficherMenu,1615387708,,200
 56fb8c,127.0.0.1,GET,http://127.0.0.1:8001/assetassets/vendor/venobox/venobox.css,1615387708,53ac8e,404
 53ac8e,127.0.0.1,GET,http://127.0.0.1:8001/assetassets/vendor/venobox/venobox.css,1615387708,,404
+9bcf80,127.0.0.1,GET,http://127.0.0.1:8000/,1615472037,,200
+29d12e,127.0.0.1,GET,http://127.0.0.1:8000/assetassets/vendor/venobox/venobox.css,1615472040,6580cd,404
+6580cd,127.0.0.1,GET,http://127.0.0.1:8000/assetassets/vendor/venobox/venobox.css,1615472040,,404
