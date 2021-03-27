@@ -4,16 +4,19 @@ namespace App\Controller;
 
 use App\Entity\Menu;
 use App\Form\MenuType;
+use App\Repository\CategorieRepository;
 use App\Repository\MenuRepository;
 use App\Repository\UserRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Validator\Constraints\Date;
 
 class MenuController extends AbstractController
 {
@@ -28,13 +31,17 @@ class MenuController extends AbstractController
     }
 
 
-      /**
-     * @Route("/menu/add", name="add-menu")
+    /**
+     * @Route("/menu/add/{categorie}", name="add-menu")
+     * @param Request $request
+     * @param $categorie
+     * @return RedirectResponse|Response
      */
-    function AddMenu(Request $request)
+    function AddMenu(Request $request,$categorie,CategorieRepository $categorieRepository)
     {
         $menu = new Menu();
         $form = $this->CreateForm(MenuType::class, $menu);
+        $menu->setCategorie($categorieRepository->find($categorie));
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('img')->getData();
@@ -53,26 +60,53 @@ class MenuController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($menu);
             $em->flush();
-            return $this->redirectToRoute('menu-class',["crit" => "none"]);
+            return $this->redirectToRoute('menu-class',["crit" => "none","idCat" => $menu->getCategorie()->getId()]);
         }
         return $this->render('menu/AddMenu.html.twig', ['form' => $form->CreateView()]);
     }
 
 
+
+
     /**
      * @param MenuRepository $repository
+     * @param CategorieRepository $categorieRepository
      * @param $crit
+     * @param $idCat
      * @return Response
-     * @Route ("/AfficherMenu/{crit}", name="menu-class")
+     * @Route ("/AfficherMenu/{crit}/{idCat}", name="menu-class")
      */
-    public function Affiche(MenuRepository $repository,$crit)
+    public function Affiche(MenuRepository $repository, CategorieRepository $categorieRepository, $crit, $idCat)
     {
-        if($crit == "none"){
+        $categories = $categorieRepository->findAll();
+        $categorie = $categorieRepository->find($idCat);
+        if($idCat != 0){
+            $menu = $categorie->getMenus();
+        }else{
             $menu = $repository->findAll();
-            return $this->render('menu/AfficheMenu.html.twig', ['menu' => $menu]);
+        }
+
+
+        for($i=0;$i<count($menu);$i++){
+          if($menu[$i]->getExpireDate() < new \DateTime()){
+              $menu[$i]->setIsExpired(true);
+              $em = $this->getDoctrine()->getManager();
+              $em->persist($menu[$i]);
+              $em->flush();
+          }
+        }
+
+        if($crit == "none"){
+            return $this->render('menu/AfficheMenu.html.twig', [
+                'categorie' => $categorie,
+                'menu' => $menu,
+                'categories' => $categories
+            ]);
         }
         else{
             return $this->render('menu/AfficheMenu.html.twig', [
+                'idCat' => $idCat,
+                'categories' => $categories,
                 'menu' => $repository->sortById($crit,"DESC")
             ]);
         }
@@ -108,7 +142,7 @@ class MenuController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($menu);
             $em->flush();
-            return $this->redirectToRoute("menu-class",["crit" => "none"]);
+            return $this->redirectToRoute("menu-class",["crit" => "none",'idCat' => $menu->getCategorie()->getId()]);
         }
         return $this->render('menu/modifier.html.twig', [
             'update_form' => $form->createView()
@@ -139,7 +173,7 @@ class MenuController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($menu);
         $em->flush();
-        return $this->redirectToRoute("menu-class",["crit" => "none"]);
+        return $this->redirectToRoute("menu-class",["crit" => "none",'idCat' => $menu->getCategorie()->getId()]);
     }
 
     /**

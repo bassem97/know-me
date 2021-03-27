@@ -47,6 +47,12 @@ class Menu
      */
     private $expirationDate ;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="menus")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categorie;
+
 
     public function __construct()
     {
@@ -128,6 +134,18 @@ class Menu
     public function setImg($img)
     {
         $this->img = $img;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

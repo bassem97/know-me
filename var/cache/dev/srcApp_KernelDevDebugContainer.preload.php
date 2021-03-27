@@ -10,7 +10,7 @@ if (in_array(PHP_SAPI, ['cli', 'phpdbg'], true)) {
 }
 
 require dirname(__DIR__, 3).''.\DIRECTORY_SEPARATOR.'vendor/autoload.php';
-require __DIR__.'/Container70AH3bh/srcApp_KernelDevDebugContainer.php';
+require __DIR__.'/ContainerU6uofrL/srcApp_KernelDevDebugContainer.php';
 
 $classes = [];
 $classes[] = 'Symfony\Bundle\FrameworkBundle\FrameworkBundle';
@@ -34,6 +34,7 @@ $classes[] = 'Symfony\Bundle\FrameworkBundle\EventListener\ResolveControllerName
 $classes[] = 'Symfony\Component\HttpFoundation\RequestMatcher';
 $classes[] = 'Symfony\Component\DependencyInjection\ServiceLocator';
 $classes[] = 'App\Controller\AdminController';
+$classes[] = 'App\Controller\CategorieController';
 $classes[] = 'App\Controller\EventController';
 $classes[] = 'App\Controller\GerantController';
 $classes[] = 'App\Controller\IndexController';
@@ -47,6 +48,7 @@ $classes[] = 'App\Controller\ReservationController';
 $classes[] = 'App\Controller\RoomController';
 $classes[] = 'App\Controller\UserController';
 $classes[] = 'App\Form\AdminFormType';
+$classes[] = 'App\Form\CategorieType';
 $classes[] = 'App\Form\EventType';
 $classes[] = 'App\Form\ImageType';
 $classes[] = 'App\Form\MenuType';
@@ -56,6 +58,7 @@ $classes[] = 'App\Form\ReservationFormType';
 $classes[] = 'App\Form\RoomType';
 $classes[] = 'App\Form\UserType';
 $classes[] = 'App\Repository\AdminRepository';
+$classes[] = 'App\Repository\CategorieRepository';
 $classes[] = 'App\Repository\EventRepository';
 $classes[] = 'App\Repository\GerantRepository';
 $classes[] = 'App\Repository\MenuRepository';
