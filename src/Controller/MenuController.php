@@ -105,6 +105,7 @@ class MenuController extends AbstractController
         }
         else{
             return $this->render('menu/AfficheMenu.html.twig', [
+                'categorie' => $categorie,
                 'idCat' => $idCat,
                 'categories' => $categories,
                 'menu' => $repository->sortById($crit,"DESC")
