@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Categorie{% endblock %}
+
+{% block body %}
+{#    <h1>Edit Categorie</h1>#}
+
+{#    {{ include('categorie/_form.html.twig', {'button_label': 'Update'}) }}#}
+
+{#    <a href="{{ path('categorie_index') }}">back to list</a>#}
+
+{#    {{ include('categorie/_delete_form.html.twig') }}#}
+<form method="POST" action="#" style="margin-top: 100px" >
+    {{ form_start(form)}}
+    <div class="form-group">
+        {{ form_widget(form.nom,{'attr':{'placeholder':'nom','class':'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.description,{'attr':{'placeholder':'description','class':'form-control'}}) }}
+    </div>
+
+    <div class="text-center mt-3">
+        <input value="modifier" type="submit" class="submit-btn3"/>
+    </div>
+    {{ form_end(form)}}
+</form>
+{% endblock %}
