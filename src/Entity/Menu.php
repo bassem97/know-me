@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\MenuRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=MenuRepository::class)
@@ -14,48 +17,77 @@ class Menu
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("menu")
+     * @Groups("categorie")
+     * @Groups("ingredient")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("menu")
+     * @Groups("categorie")
+     * @Groups("ingredient")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("menu")
+     * @Groups("categorie")
+     * @Groups("ingredient")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("menu")
+     * @Groups("categorie")
+     * @Groups("ingredient")
      */
     private $img;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups("menu")
+     * @Groups("categorie")
+     * @Groups("ingredient")
      */
     private $isExpired = false;
 
      /**
       * @ORM\Column(type="datetime")
-     */
+      * @Groups("menu")
+      * @Groups("categorie")
+      * @Groups("ingredient")
+      */
     private $date ;
 
     /**
       * @ORM\Column(type="datetime")
+     * @Groups("menu")
+     * @Groups("categorie")
+     * @Groups("ingredient")
      */
     private $expirationDate ;
 
     /**
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="menus")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("menu")
      */
     private $categorie;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="menu", cascade={"all"})
+     * @Groups("menu")
+     */
+    private $ingredients;
 
 
     public function __construct()
     {
+        $this->ingredients = new ArrayCollection();
         date_default_timezone_set("Europe/Madrid");
         $this->date = new \DateTime();
         $this->expirationDate = new \DateTime("+1 day");
@@ -73,17 +105,23 @@ class Menu
         return $this;
     }
 
-    public function getExpireDate(): ?\DateTimeInterface
+    /**
+     * @return \DateTime
+     */
+    public function getExpirationDate(): \DateTime
     {
         return $this->expirationDate;
     }
 
-    public function setExpireDate(\DateTimeInterface $date): self
+    /**
+     * @param \DateTime $expirationDate
+     */
+    public function setExpirationDate(\DateTime $expirationDate): void
     {
-        $this->expirationDate = $date;
-
-        return $this;
+        $this->expirationDate = $expirationDate;
     }
+
+
 
     public function getIsExpired(): ?bool
     {
@@ -149,4 +187,23 @@ class Menu
 
         return $this;
     }
+
+
+    /**
+     * @return Collection|Ingredient[]
+     */
+    public function getIngredients(): Collection
+    {
+        return $this->ingredients;
+    }
+
+    /**
+     * @param ArrayCollection $ingredients
+     */
+    public function setIngredients(ArrayCollection $ingredients): void
+    {
+        $this->ingredients = $ingredients;
+    }
+
+
 }
