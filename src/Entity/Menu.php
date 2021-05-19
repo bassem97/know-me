@@ -74,9 +74,14 @@ class Menu
     /**
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="menus")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups("menu")
+//     * @Groups("menu")
      */
     private $categorie;
+
+    /**
+     * @Groups("menu")
+     */
+    private $categorie_id ;
 
     /**
      * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="menu", cascade={"all"})
@@ -184,6 +189,7 @@ class Menu
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+        $this->categorie_id = $categorie->getId();
 
         return $this;
     }
@@ -204,6 +210,24 @@ class Menu
     {
         $this->ingredients = $ingredients;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCategorieId()
+    {
+        return $this->categorie->getId();
+    }
+
+    /**
+     * @param mixed $categorie_id
+     */
+    public function setCategorieId($categorie_id): void
+    {
+        $this->categorie_id = $categorie_id;
+    }
+
+
 
 
 }

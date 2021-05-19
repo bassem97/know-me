@@ -30,7 +30,7 @@ class ApiIngredientController extends AbstractController
     }
 
     /**
-     * @Route("ajouter/menu/{id}", name="ajout_ingredient_json", methods={"POST"})
+     * @Route("ajouter/menu/{id}", name="ajout_ingredient_json")
      */
     public function new($id,Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): Response{
         $content = $request->getContent();
@@ -44,16 +44,16 @@ class ApiIngredientController extends AbstractController
     }
 
     /**
-     * @Route("modifier/{id}", name="api_ingredient_update", methods={"PUT"})
+     * @Route("modifier/{id}", name="api_ingredient_update")
      */
     public function edit(?Ingredient $ingredient, Request $request): Response
     {
-        $data = json_decode($request->getContent());
         if (!$ingredient) {
             return new Response("ingredient Not Found");
         }
-        $ingredient->setDescription($data->description);
-
+        $ingredient->setDescription($request->get('description'));
+        $menu = $this->getDoctrine()->getRepository(Menu::class)->find($request->get('menu_id'));
+        $ingredient->setMenu($menu);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
         return new Response("ingredient Updated");

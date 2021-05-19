@@ -37,6 +37,11 @@ class Ingredient
      */
     private $menu;
 
+    /**
+     * @Groups("ingredientg")
+     */
+    private $menu_id ;
+
     public function __construct()
     {
     }
@@ -88,6 +93,24 @@ class Ingredient
     {
         $this->menu = $menu;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMenuId()
+    {
+        return $this->menu->getId();
+    }
+
+    /**
+     * @param mixed $menu_id
+     */
+    public function setMenuId($menu_id): void
+    {
+        $this->menu_id = $menu_id;
+    }
+
+
 
 
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categorie;
 use App\Entity\Menu;
+use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +31,7 @@ class ApiMenuController extends AbstractController
     }
 
     /**
-     * @Route("ajouter/categorie/{id}", name="ajout_menu_json", methods={"POST"})
+     * @Route("ajouter/categorie/{id}", name="ajout_menu_json")
      */
     public function new($id,Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): Response{
         $content = $request->getContent();
@@ -44,20 +45,19 @@ class ApiMenuController extends AbstractController
     }
 
     /**
-     * @Route("modifier/{id}", name="api_menu_update", methods={"PUT"})
+     * @Route("modifier/{id}", name="api_menu_update")
      */
     public function edit(?Menu $menu, Request $request): Response
     {
-        $data = json_decode($request->getContent());
         if (!$menu) {
             return new Response("menu Not Found");
         }
-        $menu->setName($data->name);
-        $menu->setDescription($data->description);
-        $menu->setDate($data->date);
-        $menu->setIsExpired($data->isExpired);
-        $menu->setImg($data->img);
-        $menu->setExpireDate($data->expiration_date);
+        $menu->setName($request->get('name'));
+        $menu->setDescription($request->get('description'));
+        $menu->setImg($request->get('img'));
+        $menu->setIsExpired($request->get('is_expired'));
+        $categorie = $this->getDoctrine()->getRepository(Categorie::class)->find($request->get('categorie_id'));
+        $menu->setCategorie($categorie);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
         return new Response("menu Updated");

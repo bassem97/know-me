@@ -40,19 +40,19 @@ class ApiCategorieController extends AbstractController
     }
 
     /**
-     * @Route("modifier/{id}", name="api_categorie_update", methods={"PUT"})
+     * @Route("modifier/{id}", name="api_categorie_update")
      */
     public function edit(?Categorie $categorie, Request $request): Response
     {
-        $data = json_decode($request->getContent());
         if (!$categorie) {
-            return new Response("categorie Not Found");
+            return new Response("Categorie Not Found");
         }
-        $categorie->setNom($data->nom);
-        $categorie->setDescription($data->description);
+
+        $categorie->setNom($request->get('nom'));
+        $categorie->setDescription($request->get('description'));
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
-        return new Response("categorie Updated");
+        return new Response("Categorie Updated");
     }
 
     /**
